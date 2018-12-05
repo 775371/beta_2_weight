@@ -87,9 +87,9 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
    
    
      /* Y= beta_0 + beta_1 T_1+beta_2 T_2 */
-    beta_1 = ((twt* yz_sum *twt* yy_sum-twt* yz_sum * y_sum * y_sum-y_sum * z_sum *twt*kk_sum + y_sum * z_sum * k_sum * k_sum)
-              -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum *k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
-            / ((twt* yy_sum - y_sum * y_sum)*(twt* kk_sum - k_sum * k_sum)); 
+    beta_1 = ((twt* yz_sum *twt* yy_sum - twt* yz_sum * y_sum * y_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
+              -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum * k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
+            / ( (twt * yy_sum - y_sum * y_sum)* (twt* kk_sum - k_sum * k_sum) ); 
         
     beta_2 = ((twt* kz_sum *twt* kk_sum-twt* kz_sum * y_sum * y_sum- z_sum * k_sum *twt*yy_sum + z_sum * k_sum * y_sum * y_sum)
               -(twt* yz_sum *twt* ky_sum-twt* yz_sum * y_sum *k_sum - z_sum * y_sum *twt* ky_sum + z_sum * y_sum * y_sum * k_sum)) 
@@ -110,7 +110,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     //*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
     //(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
     *risk = 4 * twt * max_y * max_y - alpha * twt * effect  + (1 - alpha) * (1 + train_to_est_ratio) * twt * ( var_beta);
-    Rprintf("if twt in CTss in CT.c %d.\n", twt);   
+    Rprintf("twt in CTss in CT.c %d.\n", twt);   
  }
 
 
@@ -197,7 +197,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) + beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt);
 
-    
+     Rprintf("right_wt in CT in CT.c %d.\n", right_wt);
   
         
    /* beta_1 = (right_n * right_yz_sum - right_z_sum * right_y_sum) / (right_n * right_yy_sum - right_y_sum * right_y_sum);
