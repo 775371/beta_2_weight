@@ -106,7 +106,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     var_beta = beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt) + beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt);
     
     *tr_mean= temp1 / ttreat;
-    *cotwt_mean= temp0 / (twt - ttreat);
+    *con_mean= temp0 / (twt - ttreat);
     *value = effect;
 
     //*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
