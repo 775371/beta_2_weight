@@ -15,9 +15,7 @@ int
 CTinit(int n, double *y[], int maxcat, char **error,
         int *size, int who, double *wt, double *treatment, 
         int bucketnum, int bucketMax, double *train_to_est_ratio)
-{ Rprintf("CTinit in CT.c bw\n");
-        Rprintf("The who in function CTinit in CT.c is %d\n", who);  
-        Rprintf("The maxcat in function CTinit in CT.c is %d\n", maxcat); 
+{ 
     if (who == 1 && maxcat > 0) {
         
         graycode_init0(maxcat);
@@ -35,7 +33,7 @@ CTinit(int n, double *y[], int maxcat, char **error,
     }
     *size = 1;
     *train_to_est_ratio = n * 1.0 / ct.NumHonest;
-    Rprintf("CTinit in CT.c end\n"); 
+   
     return 0;
        
 }
@@ -230,7 +228,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         best = 0;
         
         for (i = 0; right_n > edge; i++) {
-            Rprintf("continuous predictor \n");
+            
                 
             Rprintf("The wt[i] in function CT in CT.c is %d\n",(int)wt[i]);
             Rprintf("The treatment[i] in function CT in CT.c is %d\n",(int)treatment[i]);
