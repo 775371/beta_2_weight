@@ -27,7 +27,11 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
     double tr_sqr_sum, con_sqr_sum;
     double consums, trsums, cons, trs;
     double tr_var, con_var;
-
+    double  y_sum, z_sum;
+    double yz_sum,  yy_sum, zz_sum;
+    
+    double k_sum  ; /* two beta*/
+    double kz_sum ,  ky_sum , kk_sum ;
     /*
      * Now, repeat the following: for the cp of interest, run down the tree
      *   until I find a node with smaller complexity.  The parent node will
@@ -41,7 +45,18 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         trsums = 0.;
         tr_sqr_sum = 0.;
         con_sqr_sum = 0.;
-        
+        n = 0;
+	k_sum = 0.;
+	kz_sum = 0.;
+	ky_sum = 0.;
+	kk_sum = 0.;
+	y_sum = 0.;
+        yz_sum = 0.;
+	yy_sum = 0.;
+	z_sum = 0.;
+	zz_sum = 0.;
+	    
+	    
         while (cp[i] < tree->complexity) {
 	        tree = branch(tree, obs);
 	        if (tree == 0)
@@ -49,7 +64,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 	        otree = tree;
 	    }
 	    xpred[i] = tree->response_est[0];
-        my_leaf_id = tree->id;
+            my_leaf_id = tree->id;
         
         for (s = k; s < ct.n; s++) {
             tree_tmp = otree_tmp;
@@ -69,6 +84,16 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                     trsums += *ct.ydata[tmp_obs] * ct.wt[tmp_obs];
                     tr_sqr_sum += (*ct.ydata[tmp_obs]) * (*ct.ydata[tmp_obs]) * ct.wt[tmp_obs];
                 }
+		    n++;
+		y_sum += ct.treatment[tmp_obs];
+                z_sum += *ct.ydata[tmp_obs];
+		yy_sum += ct.treatment[tmp_obs]*ct.treatment[tmp_obs];
+                yz_sum += ct.treatment[tmp_obs] * *ct.ydata[tmp_obs];
+                zz_sum += *ct.ydata[tmp_obs] * *ct.ydata[tmp_obs];
+                k_sum += ct.treatments[tmp_obs];
+                ky_sum += ct.treatments[tmp_obs] * ct.treatment[tmp_obs];
+                kz_sum += ct.treatments[tmp_obs] * *ct.ydata[tmp_obs];
+                kk_sum += ct.treatments[tmp_obs] * ct.treatments[tmp_obs];
             }
         }
 
