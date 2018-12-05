@@ -136,7 +136,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 	        
        beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / n;
 	        
-       effect = beta_1* beta_1+ beta_2*beta_2;
+       double effect = beta_1* beta_1+ beta_2*beta_2;
 
        beta1_sqr_sum = beta_1 * beta_1;
        beta2_sqr_sum = beta_2 * beta_2;
