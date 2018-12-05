@@ -28,12 +28,12 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
     double tr_sqr_sum, con_sqr_sum;
     double consums, trsums, cons, trs;
     double tr_var, con_var;
-    double  y_sum, z_sum;
+   /* double  y_sum, z_sum;
     double yz_sum,  yy_sum, zz_sum;
     
-    double k_sum  ; /* two beta*/
+    double k_sum  ; 
     double kz_sum ,  ky_sum , kk_sum ;
-    int n;
+    int n; */
     /*
      * Now, repeat the following: for the cp of interest, run down the tree
      *   until I find a node with smaller complexity.  The parent node will
@@ -49,7 +49,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         trsums = 0.;
         tr_sqr_sum = 0.;
         con_sqr_sum = 0.;
-        n = 0;
+        /*n = 0;
 	k_sum = 0.;
 	kz_sum = 0.;
 	ky_sum = 0.;
@@ -58,7 +58,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         yz_sum = 0.;
 	yy_sum = 0.;
 	z_sum = 0.;
-	zz_sum = 0.;
+	zz_sum = 0.;*/
 	    
 	    
         while (cp[i] < tree->complexity) { 
@@ -95,7 +95,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                     tr_sqr_sum += (*ct.ydata[tmp_obs]) * (*ct.ydata[tmp_obs]) * ct.wt[tmp_obs];
                 }
 		
-		    n++;
+		  /*  n++;
 		y_sum += ct.treatment[tmp_obs];
                 z_sum += *ct.ydata[tmp_obs];
 		yy_sum += ct.treatment[tmp_obs]*ct.treatment[tmp_obs];
@@ -105,7 +105,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                 ky_sum += ct.treatments[tmp_obs] * ct.treatment[tmp_obs];
                 kz_sum += ct.treatments[tmp_obs] * *ct.ydata[tmp_obs];
                 kk_sum += ct.treatments[tmp_obs] * ct.treatments[tmp_obs];
-		Rprintf(" finish define CTH_rundown.c \n");
+		Rprintf(" finish define CTH_rundown.c \n");*/
 		
             }
 		Rprintf("trs in CTH_rundown.c %d.\n", trs);  
@@ -134,12 +134,12 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             con_var = con_sqr_sum / cons - con_mean * con_mean;
         }
         
-       /* xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
+        xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
                     con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);*/
        
-       double  beta_1 = 0., beta_0 = 0., beta_2=0.; 
-       double var_beta = 0., beta1_sqr_sum = 0.; /* var */
-       double beta2_sqr_sum = 0.; /* var */ 
+       /*double  beta_1 = 0., beta_0 = 0., beta_2=0.; 
+       double var_beta = 0., beta1_sqr_sum = 0.; 
+       double beta2_sqr_sum = 0.; 
   
        double tmp=0.;
 	    
@@ -161,7 +161,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
        tmp=var_beta;
 
     xtemp[i] = 4 * ct.max_y * ct.max_y - alpha *  effect  + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) 
-       * (1 - alpha) * tmp; 
+       * (1 - alpha) * tmp; */
 	    
 	    
 	Rprintf("xtemp in CTH_rundown.c %d.\n", xtemp);
