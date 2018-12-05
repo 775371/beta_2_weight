@@ -16,7 +16,7 @@
 
 void
 nodesplit(pNode me, int nodenum, int n1, int n2, int *nnleft, int *nnright)
-{Rprintf("nodesplit\n");
+{       Rprintf("nodesplit.c\n");
 	int i, j, k;
 	pSplit tsplit;
 	int var, extra, lastisleft, someleft;
