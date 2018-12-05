@@ -47,6 +47,8 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
     double ttreat = 0.;
     double effect;
+    double effects;
+ 
     double tr_var, con_var;
     double con_sqr_sum = 0., tr_sqr_sum = 0.;
     double var_beta = 0., beta1_sqr_sum = 0.; /* var */
@@ -58,7 +60,8 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     
     double  beta_1 = 0., beta_0 = 0., beta_2=0.;    
     double beta2_sqr_sum = 0.; /* var */  
-        
+   
+ 
     for (i = 0; i < n; i++) {
         temp1 += *y[i] * wt[i] * treatment[i];
         temp0 += *y[i] * wt[i] * (1 - treatment[i]);
@@ -99,7 +102,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / twt;
         
     effect = beta_1;
-    
+   effects=beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt) + beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt);
@@ -110,7 +113,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
 
     //*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
     //(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
-    *risk = 4 * twt * max_y * max_y - alpha * twt * (beta1_sqr_sum+beta2_sqr_sum)*(beta1_sqr_sum+beta2_sqr_sum)  + (1 - alpha) * (1 + train_to_est_ratio) * twt * ( var_beta);
+    *risk = 4 * twt * max_y * max_y - alpha * twt * (effect*effect+effects*effects)  + (1 - alpha) * (1 + train_to_est_ratio) * twt * ( var_beta);
     Rprintf("twt in CTss in CT.c %d.\n", twt);   
  }
 
