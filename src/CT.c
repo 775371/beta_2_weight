@@ -87,11 +87,14 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
    
    
      /* Y= beta_0 + beta_1 T_1+beta_2 T_2 */
-    beta_1 = ((twt* yz_sum *twt* yy_sum - twt* yz_sum * y_sum * y_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
-              -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum * k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) / ( (twt * yy_sum - y_sum * y_sum) * (twt* kk_sum - k_sum * k_sum) - (twt*ky_sum-yy_sum*kk_sum)); 
+    beta_1 = (
+            (twt* yz_sum *twt* yy_sum - twt* yz_sum * y_sum * y_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
+            -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum * k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
+            / ( (twt * yy_sum - y_sum * y_sum) * (twt* kk_sum - k_sum * k_sum) - (twt * ky_sum - yy_sum * kk_sum)); 
         
     beta_2 = ((twt* kz_sum *twt* kk_sum-twt* kz_sum * y_sum * y_sum- z_sum * k_sum *twt*yy_sum + z_sum * k_sum * y_sum * y_sum)
-              -(twt* yz_sum *twt* ky_sum -twt* yz_sum * y_sum *k_sum - z_sum * y_sum *twt* ky_sum + z_sum * y_sum * y_sum * k_sum)) / ((twt* yy_sum - y_sum * y_sum)*(twt* kk_sum - k_sum * k_sum)-(twt*ky_sum-yy_sum*kk_sum)); 
+              -(twt* yz_sum *twt* ky_sum -twt* yz_sum * y_sum *k_sum - z_sum * y_sum *twt* ky_sum + z_sum * y_sum * y_sum * k_sum)) 
+            / ((twt* yy_sum - y_sum * y_sum)*(twt* kk_sum - k_sum * k_sum)-(twt*ky_sum-yy_sum*kk_sum) ); 
         
     beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / twt;
         
@@ -107,7 +110,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
 
     //*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
     //(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
-    *risk = 4 * twt * max_y * max_y - alpha * twt * effect*effect  + (1 - alpha) * (1 + train_to_est_ratio) * twt * ( var_beta);
+    *risk = 4 * twt * max_y * max_y - alpha * twt * (beta1_sqr_sum+beta2_sqr_sum)*(beta1_sqr_sum+beta2_sqr_sum)  + (1 - alpha) * (1 + train_to_est_ratio) * twt * ( var_beta);
     Rprintf("twt in CTss in CT.c %d.\n", twt);   
  }
 
@@ -182,15 +185,17 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
 
     beta_1 = ((right_wt * right_yz_sum *right_wt* right_yy_sum- right_wt * right_yz_sum * right_y_sum * right_y_sum-right_y_sum * right_z_sum *right_wt *right_kk_sum + right_y_sum * right_z_sum * right_k_sum * right_k_sum)
               -(right_wt * right_kz_sum * right_wt * right_ky_sum-right_wt * right_kz_sum * right_y_sum *right_k_sum - right_z_sum * right_k_sum * right_wt * right_ky_sum + right_z_sum * right_k_sum * right_k_sum * right_y_sum)) 
-            / ((right_wt * right_yy_sum - right_y_sum * right_y_sum)*(right_wt * right_kk_sum - right_k_sum * right_k_sum) - (right_wt*right_ky_sum-right_yy_sum*right_kk_sum)); 
+            / ((right_wt * right_yy_sum - right_y_sum * right_y_sum)*(right_wt * right_kk_sum - right_k_sum * right_k_sum) 
+               -(right_wt*right_ky_sum-right_yy_sum*right_kk_sum)); 
         
     beta_2 =  ((right_wt * right_kz_sum *right_wt* right_kk_sum- right_wt * right_kz_sum * right_y_sum * right_y_sum- right_z_sum * right_k_sum *right_wt *right_yy_sum + right_z_sum * right_k_sum * right_y_sum * right_y_sum)
               -(right_wt * right_yz_sum * right_wt * right_ky_sum-right_wt * right_yz_sum * right_y_sum *right_k_sum - right_z_sum * right_y_sum * right_wt * right_ky_sum + right_z_sum * right_y_sum * right_y_sum * right_k_sum)) 
-            / ((right_wt * right_yy_sum - right_y_sum * right_y_sum)*(right_wt * right_kk_sum - right_k_sum * right_k_sum)- (right_wt*right_ky_sum-right_yy_sum*right_kk_sum));
+            / ((right_wt * right_yy_sum - right_y_sum * right_y_sum)*(right_wt * right_kk_sum - right_k_sum * right_k_sum)
+               - (right_wt*right_ky_sum-right_yy_sum*right_kk_sum));
         
     beta_0 = (right_z_sum - beta_1 * right_y_sum -beta_2 * right_k_sum) / right_wt;
         
-    temp = beta_1 ;
+    temp = beta_1;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) + beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt);
@@ -211,7 +216,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
    /* node_effect = alpha * temp * temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
         * right_wt * (tr_var / right_tr  + con_var / (right_wt - right_tr));*/
    
-    node_effect = alpha * temp *temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    node_effect = alpha * (beta1_sqr_sum+beta2_sqr_sum)*(beta1_sqr_sum+beta2_sqr_sum)  * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
         * right_wt * (var_beta);
     
     if (nclass == 0) {
@@ -307,7 +312,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     var_beta = beta1_sqr_sum / left_wt - beta_1 * beta_1 / (left_wt * left_wt) + beta2_sqr_sum / left_wt - beta_2 * beta_2 / (left_wt * left_wt);
 
      
-    left_effect =  left_temp *left_temp * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    left_effect =  (beta1_sqr_sum+beta2_sqr_sum)*(beta1_sqr_sum+beta2_sqr_sum)  * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * left_wt * (var_beta);
 
                    
@@ -337,7 +342,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) + beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt);
 
-    right_effect =  right_temp * right_temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    right_effect =  (beta1_sqr_sum+beta2_sqr_sum)*(beta1_sqr_sum+beta2_sqr_sum)  * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * right_wt * (var_beta);
                     
 //right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
