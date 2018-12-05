@@ -106,8 +106,9 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                 kz_sum += ct.treatments[tmp_obs] * *ct.ydata[tmp_obs];
                 kk_sum += ct.treatments[tmp_obs] * ct.treatments[tmp_obs];
 		Rprintf(" finish define CTH_rundown.c \n");
-		   Rprintf("trs in CTH_rundown.c %d.\n", trs);  
+		
             }
+		Rprintf("trs in CTH_rundown.c %d.\n", trs);  
         }
 
         if (trs == 0) {
@@ -118,8 +119,10 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             tr_mean = trsums / trs;
             tree->xtreatMean[0] = tr_mean;
             tr_var = tr_sqr_sum / trs - tr_mean * tr_mean;
+		
+		Rprintf(" tree->parent->xtreatMean[0] in CTH_rundown.c %d.\n", tree->parent->xtreatMean[0]); 
         }
-     Rprintf(" tree->parent->xtreatMean[0] in CTH_rundown.c %d.\n", tree->parent->xtreatMean[0]);        
+            
 	    
 	    
         if (cons == 0) {Rprintf("if cons in CTH_rundown.c %d.\n", cons); 
