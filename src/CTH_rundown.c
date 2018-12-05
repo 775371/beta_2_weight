@@ -97,6 +97,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 
 oops:;
     if (ct.usesurrogate < 2) {  /* must have hit a missing value */
+	    Rprintf("Entered CTH_rundown.c. Double check.\n");
 	for (i = 0; i < ct.num_unique_cp; i++)
 	    xpred[i] = otree->response_est[0];
 
