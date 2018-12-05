@@ -345,7 +345,7 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 					   as.integer(HonestSampleSize),
 					   as.double(cv.gamma)
 					   )
-                print("causalTree.R DEFINE")
+                print("END causalTree.R")
 		nsplit <- nrow(ctfit$isplit) # total number of splits, primary and surrogate
 		## total number of categorical splits
 		ncat <- if (!is.null(ctfit$csplit)) nrow(ctfit$csplit) else 0L
