@@ -305,15 +305,12 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         
     beta_0 = (left_z_sum - beta_1 * left_y_sum -beta_2 * left_k_sum) / left_wt;
         
-    temp = beta_1 * beta_1 + beta_2 * beta_2;
+    left_temp = beta_1 * beta_1 + beta_2 * beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / left_wt - beta_1 * beta_1 / (left_wt * left_wt) + beta2_sqr_sum / left_wt - beta_2 * beta_2 / (left_wt * left_wt);
 
-    
-  
-        
-  
+     
     left_effect =  left_temp * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * left_wt * (var_beta);
 
@@ -339,15 +336,11 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         
     beta_0 = (right_z_sum - beta_1 * right_y_sum -beta_2 * right_k_sum) / right_wt;
         
-    temp = beta_1 * beta_1 + beta_2 * beta_2;
+    right_temp = beta_1 * beta_1 + beta_2 * beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) + beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt);
 
-    
-  
-        
-   
     right_effect =  right_temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * right_wt * (var_beta);
                     
@@ -362,6 +355,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                             (right_tr_var / right_tr + right_con_var / (right_wt - right_tr));*/
                 
                 temp = left_effect + right_effect - node_effect;
+                Rprintf("The temp in function CT in CT.c is %d\n",temp);
+                    
                 if (temp > best) {
                     best = temp;
                     where = i;               
@@ -529,7 +524,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                     
              
     temp = left_effect + right_effect - node_effect;
-    Rprintf("The temp in function CT in CT.c is %d\n",temp);       
+         
                 
                 if (temp > best) {
                     best = temp;
