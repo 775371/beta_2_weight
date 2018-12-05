@@ -42,7 +42,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
      */
     for (i = 0; i < ct.num_unique_cp; i++) {
 	
-	    Rprintf("initial CTH_rundown.c\n");
+	 
         cons = 0.;
         trs = 0.;
         consums = 0.;
@@ -94,6 +94,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                     trsums += *ct.ydata[tmp_obs] * ct.wt[tmp_obs];
                     tr_sqr_sum += (*ct.ydata[tmp_obs]) * (*ct.ydata[tmp_obs]) * ct.wt[tmp_obs];
                 }
+		
 		    n++;
 		y_sum += ct.treatment[tmp_obs];
                 z_sum += *ct.ydata[tmp_obs];
@@ -105,6 +106,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                 kz_sum += ct.treatments[tmp_obs] * *ct.ydata[tmp_obs];
                 kk_sum += ct.treatments[tmp_obs] * ct.treatments[tmp_obs];
 		Rprintf(" finish define CTH_rundown.c \n");
+		   Rprintf("trs in CTH_rundown.c %d.\n", trs);  
             }
         }
 
