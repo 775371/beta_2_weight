@@ -112,7 +112,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     //*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
     //(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
     *risk = 4 * twt * max_y * max_y - alpha * twt * effect  + (1 - alpha) * (1 + train_to_est_ratio) * twt * ( var_beta);
-        
+    Rprintf("if twt in CTss in CT.c %d.\n", twt);   
  }
 
 
