@@ -208,8 +208,9 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) + beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt);
-
-     Rprintf("right_wt in CT in CT.c %d.\n", right_wt);
+    
+    Rprintf("beta_1 in CTss in CT.c %d.\n", beta_1); 
+    Rprintf("beta_2 in CTss in CT.c %d.\n", beta_2); 
   
         
    /* beta_1 = (right_n * right_yz_sum - right_z_sum * right_y_sum) / (right_n * right_yy_sum - right_y_sum * right_y_sum);
