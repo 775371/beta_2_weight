@@ -177,7 +177,8 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         
 
         fix_cp(xtree, xtree->complexity);
-
+        xtree->parent=xtree;
+           
         /*
          * run the extra data down the new tree
          */
