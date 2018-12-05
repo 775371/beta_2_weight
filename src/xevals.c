@@ -63,7 +63,7 @@ double fitA_xpred(double *y, double wt, double treatment, double tree_tr_mean, d
 
 double CTH_xpred(double *y, double wt, double treatment, double tr_mean,
                  double con_mean, double trs, double cons, double alpha, 
-                 double xtrain_to_est_ratio, double propensity) {Rprintf("CTH_xpred\n");
+                 double xtrain_to_est_ratio, double propensity) {Rprintf("CTH_xpred\n in xeval.c");
    double res;
    double tr_var;
    double con_var;
