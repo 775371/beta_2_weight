@@ -230,6 +230,14 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         best = 0;
         
         for (i = 0; right_n > edge; i++) {
+            Rprintf("continuous predictor \n");
+                
+            Rprintf("The wt[i] in function CT in CT.c is %d\n",(int)wt[i]);
+            Rprintf("The treatment[i] in function CT in CT.c is %d\n",(int)treatment[i]);
+            Rprintf("The y[i] in function CT in CT.c is %d\n",(int)y[i]);
+                
+                
+                
             left_wt += wt[i];
             right_wt -= wt[i];
             left_tr += wt[i] * treatment[i];
