@@ -180,7 +180,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         Rprintf("xtree in myxval.c %d.\n", xtree);
            
                    Rprintf("end myval.c\n");
-        xtree->parent=xtree;
+        /* xtree->parent=xtree;
            
         /*
          * run the extra data down the new tree
