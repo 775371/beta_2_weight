@@ -32,6 +32,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
     
     double k_sum  ; /* two beta*/
     double kz_sum ,  ky_sum , kk_sum ;
+    int n;
     /*
      * Now, repeat the following: for the cp of interest, run down the tree
      *   until I find a node with smaller complexity.  The parent node will
