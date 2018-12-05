@@ -13,7 +13,8 @@
 void
 CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha, 
             double xtrain_to_est_ratio, double propensity)
-{   Rprintf("CTH_rundown.c");
+{   
+	Rprintf("CTH_rundown.c");
     int i, obs2 = (obs < 0) ? -(1 + obs) : obs;
     int my_leaf_id;
     pNode otree =  tree;
@@ -118,7 +119,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         
         xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
                     con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);
-	Rprintf("End CTH_rundown.c %d.\n", xtemp);
+	Rprintf("xtemp in CTH_rundown.c %d.\n", xtemp);
     }
     return;
 
