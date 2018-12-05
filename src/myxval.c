@@ -181,7 +181,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         /*
          * run the extra data down the new tree
          */
-      Rprintf("run the extra data down the new tree\n");
+      Rprintf("run the extra data down the new tree in myxevals.c\n");
         for(i = k; i < ct.n; i++) {
             j = ct.sorts[0][i];
             if (crossmeth == 1) {
@@ -198,11 +198,11 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
                 // fit-adaptive:
                 fitA_rundown(xtree, j, cp, xpred, xtemp, k);
                 
-            } else if (crossmeth == 5) {
+            } else if (crossmeth == 5) { Rprintf("crossmeth in myxevals.c%d.\n",crossmeth);
                 //CT- honest
                 CTH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
                 
-            } else if (crossmeth == 6) {
+            } else if (crossmeth == 6) { Rprintf("crossmeth in myxevals.c%d.\n",crossmeth);
                 //CT- dishonest
                 CTA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
             } else if (crossmeth == 7) {
