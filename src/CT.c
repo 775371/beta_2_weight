@@ -529,7 +529,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                     
              
     temp = left_effect + right_effect - node_effect;
-            
+    Rprintf("The temp in function CT in CT.c is %d\n",temp);       
                 
                 if (temp > best) {
                     best = temp;
