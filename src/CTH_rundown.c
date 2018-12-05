@@ -41,6 +41,8 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
      *   predictor.
      */
     for (i = 0; i < ct.num_unique_cp; i++) {
+	
+	    Rprintf("initial CTH_rundown.c\n");
         cons = 0.;
         trs = 0.;
         consums = 0.;
@@ -59,7 +61,8 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 	zz_sum = 0.;
 	    
 	    
-        while (cp[i] < tree->complexity) {
+        while (cp[i] < tree->complexity) { 
+		 Rprintf("cp in CTH_rundown.c is %d.\n", cp);
 	        tree = branch(tree, obs);
 	        if (tree == 0)
 		        goto oops;
@@ -69,9 +72,14 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             my_leaf_id = tree->id;
         
         for (s = k; s < ct.n; s++) {
-            tree_tmp = otree_tmp;
+
+	    tree_tmp = otree_tmp;
             j = ct.sorts[0][s];
             tmp_obs = (j < 0) ? -(1 + j) : j;
+		
+		Rprintf(" tree_tmp in CTH_rundown.c is %d.\n",  tree_tmp);
+		
+		
             while (cp[i] < tree_tmp->complexity) {
                 tree_tmp = branch(tree_tmp, tmp_obs);
             }
@@ -96,6 +104,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                 ky_sum += ct.treatments[tmp_obs] * ct.treatment[tmp_obs];
                 kz_sum += ct.treatments[tmp_obs] * *ct.ydata[tmp_obs];
                 kk_sum += ct.treatments[tmp_obs] * ct.treatments[tmp_obs];
+		    Rprintf(" finish define CTH_rundown.c \n");
             }
         }
 
@@ -107,7 +116,9 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             tree->xtreatMean[0] = tr_mean;
             tr_var = tr_sqr_sum / trs - tr_mean * tr_mean;
         }
-        
+        Rprintf(" parent in CTH_rundown.c %d.\n", parent);
+	    
+	    
         if (cons == 0) {
             con_mean = tree->parent->xcontrolMean[0];
             con_var = 0;
