@@ -123,6 +123,8 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
        double  beta_1 = 0., beta_0 = 0., beta_2=0.; 
        double var_beta = 0., beta1_sqr_sum = 0.; /* var */
        double beta2_sqr_sum = 0.; /* var */ 
+  
+       double tmp=0.;
 	    
        beta_1 = ((n* yz_sum *n* yy_sum-n* yz_sum * y_sum * y_sum-y_sum * z_sum *n*kk_sum + y_sum * z_sum * k_sum * k_sum)
 	              -(n* kz_sum *n* ky_sum-n* kz_sum * y_sum *k_sum - z_sum * k_sum *n* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
