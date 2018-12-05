@@ -116,7 +116,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             tree->xtreatMean[0] = tr_mean;
             tr_var = tr_sqr_sum / trs - tr_mean * tr_mean;
         }
-        Rprintf(" parent in CTH_rundown.c %d.\n", parent);
+Rprintf(" tree->parent->xtreatMean[0] in CTH_rundown.c %d.\n", tree->parent->xtreatMean[0]);        
 	    
 	    
         if (cons == 0) {
