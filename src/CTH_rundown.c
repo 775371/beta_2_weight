@@ -117,8 +117,27 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             con_var = con_sqr_sum / cons - con_mean * con_mean;
         }
         
-        xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
-                    con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);
+       /* xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
+                    con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);*/
+	 
+       double  beta_1 = 0., beta_0 = 0., beta_2=0.;    
+       double beta2_sqr_sum = 0.; /* var */    
+	
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	Rprintf("xtemp in CTH_rundown.c %d.\n", xtemp);
     }
     return;
