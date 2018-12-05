@@ -112,10 +112,10 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         xtree->num_obs = k;
        
         
-         Rprintf("start ct_init\n");
+         Rprintf("start ct_init in myxval.c\n");
         (*ct_init) (k, ct.ytemp, maxcat, errmsg, &temp, 2, ct.wtemp, ct.trtemp, 
          bucketnum, bucketMax, &xtrain_to_est_ratio);
-        Rprintf("end ct_init\n");
+        Rprintf("end ct_init in myxval.c\n");
            
            
         if (split_Rule == 1) {
@@ -177,6 +177,9 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         
 
         fix_cp(xtree, xtree->complexity);
+        Rprintf("xtree in myxval.c %d.\n", xtree);
+           
+                   Rprintf("end myval.c\n");
         /*xtree->parent=xtree;
            
         /*
@@ -199,11 +202,11 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
                 // fit-adaptive:
                 fitA_rundown(xtree, j, cp, xpred, xtemp, k);
                 
-            } else if (crossmeth == 5) { Rprintf("crossmeth in myxevals.c%d.\n",crossmeth);
+            } else if (crossmeth == 5) { Rprintf("crossmeth in myxevals.c is %d.\n",crossmeth);
                 //CT- honest
                 CTH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
                 
-            } else if (crossmeth == 6) { Rprintf("crossmeth in myxevals.c%d.\n",crossmeth);
+            } else if (crossmeth == 6) { Rprintf("crossmeth in myxevals.c is %d.\n",crossmeth);
                 //CT- dishonest
                 CTA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
             } else if (crossmeth == 7) {
@@ -256,5 +259,5 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         ct.which[i] = savew[i];
     Free(savew);
     Free(xtemp);
- Rprintf("end myval.c\n");
+
 }
