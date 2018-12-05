@@ -489,13 +489,13 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     beta_0 = (left_z_sum - beta_1 * left_y_sum - beta_2 * left_k_sum) / left_n;
 
         
-    left_temp = beta_1 + beta_2;
+    left_temp = beta_1 * beta_1+ beta_2 * beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / n - beta_1 * beta_1 / (n * n) + beta2_sqr_sum / n - beta_2 * beta_2 / (n * n);
     
    
-    left_effect = left_temp * left_temp * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    left_effect = left_temp * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * left_wt * (var_beta);
                     
                     
@@ -510,21 +510,17 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     beta_0 = (right_z_sum - beta_1 * right_y_sum - beta_2 * right_k_sum) / right_n;
 
         
-    right_temp = beta_1 + beta_2;
+    right_temp = beta_1 * beta_1+ beta_2 * beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = beta1_sqr_sum / n - beta_1 * beta_1 / (n * n) + beta2_sqr_sum / n - beta_2 * beta_2 / (n * n);
     
    
-    right_effect = right_temp * right_temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    right_effect = right_temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * right_wt * (var_beta);
                     
              
-                    
-                    
-                    
-                    
-                temp = left_effect + right_effect - node_effect;
+    temp = left_effect + right_effect - node_effect;
             
                 
                 if (temp > best) {
@@ -539,6 +535,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         }
         *improve = best;
     }
+        Rprintf("End function CT in CT.c is %d\n");
 }
 
 
