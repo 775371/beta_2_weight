@@ -247,6 +247,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
             maxcat = ncat[i];
         for (k = 0; k < n; k++)
             ct.sorts[i][k] = ct.tempvec[k];
+               Rprintf("ncat is %d.\n", ncat);
     }
 
     /*
