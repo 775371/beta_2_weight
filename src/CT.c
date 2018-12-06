@@ -91,11 +91,11 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
    
      /* Y= beta_0 + beta_1 T_1+beta_2 T_2 */
     beta_1 = (
-            (twt* yz_sum *twt* yy_sum - twt* yz_sum * y_sum * y_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
+            (twt* yz_sum *twt* kk_sum - twt* yz_sum * y_sum * y_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
             -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum * k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
             / ( (twt * yy_sum - y_sum * y_sum) * (twt* kk_sum - k_sum * k_sum) - (twt * ky_sum - yy_sum * kk_sum)); 
         
-    beta_2 = ((twt* kz_sum *twt* kk_sum-twt* kz_sum * y_sum * y_sum- z_sum * k_sum *twt*yy_sum + z_sum * k_sum * y_sum * y_sum)
+    beta_2 = ((twt* kz_sum *twt* yy_sum-twt* kz_sum * y_sum * y_sum- z_sum * k_sum *twt*yy_sum + z_sum * k_sum * y_sum * y_sum)
               -(twt* yz_sum *twt* ky_sum -twt* yz_sum * y_sum *k_sum - z_sum * y_sum *twt* ky_sum + z_sum * y_sum * y_sum * k_sum)) 
             / ((twt* yy_sum - y_sum * y_sum)*(twt* kk_sum - k_sum * k_sum)-(twt*ky_sum-yy_sum*kk_sum) ); 
         
