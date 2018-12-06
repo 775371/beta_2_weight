@@ -12,7 +12,7 @@ static double cp_scale;
 void
 ctmatrix(pNode me, int *numcat, double **dsplit,
 	 int **isplit, int **csplit, double **dnode, int **inode, int id)
-{Rprintf("ctmatrix\n");
+{Rprintf("ctmatrix in rpmatrix.c\n");
     /*
      * dsplit  0: improvement
      *         1: split point if continuous; index into csplit if not
