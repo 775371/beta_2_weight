@@ -48,6 +48,8 @@ ctmatrix(pNode me, int *numcat, double **dsplit,
     dnode[2][ncnt] = me->sum_wt;
     for (i = 0; i < ct.num_resp; i++)
 	dnode[3 + i][ncnt] = me->response_est[i];
+ /*for (i = 0; i < ct.num_resp; i++)
+	dnode[4 + i][ncnt] = me->response_est[i];*/
     inode[0][ncnt] = id;
     inode[4][ncnt] = me->num_obs;
 
