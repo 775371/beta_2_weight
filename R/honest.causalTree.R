@@ -3,7 +3,7 @@
 #
 
 honest.causalTree <- function(formula, data, weights, treatment, treatments, subset, 
-							  est_data, est_weights, est_treatment, est_subset,
+							  est_data, est_weights, est_treatment, est_treatments, est_subset,
 							  na.action = na.causalTree, split.Rule, split.Honest,
 							  HonestSampleSize, split.Bucket, bucketNum = 10,
 							  bucketMax = 40, cv.option, cv.Honest, minsize = 2L, model = FALSE,
