@@ -12,7 +12,7 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 
 	Call <- match.call()
 
-	indx <- match(c("formula", "data","datas", "weights", "subset"),
+	indx <- match(c("formula", "data", "weights", "subset"),
 				  names(Call), nomatch = 0L)
 
 	if (indx[1] == 0L) stop("a 'formula' argument is required")
@@ -22,7 +22,7 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 	m <- eval.parent(temp)					       
 	names(treatment) <- rownames(data)
 	#Add treantment
-	names(treatments) <- rownames(datas)
+	names(treatments) <- rownames(data)
 	
 	treatment <- treatment[(rownames(m))]
 	#add
