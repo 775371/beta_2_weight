@@ -32,7 +32,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"causalTree", (DL_FUNC) &causalTree, 24},
     {"pred_causalTree", (DL_FUNC) &pred_causalTree, 12},
     {"estimate_causalTree", (DL_FUNC) &estimate_causalTree, 12},
-    {"honest_estimate_causalTree", (DL_FUNC) &honest_estimate_causalTree, 20},
+    {"honest_estimate_causalTree", (DL_FUNC) &honest_estimate_causalTree, 21},
     {"honest_estimate_rparttree", (DL_FUNC) &honest_estimate_rparttree, 18},
     {NULL, NULL, 0}
 };
