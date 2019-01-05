@@ -275,7 +275,7 @@ honest_estimate_causalTree(SEXP dimx, SEXP nnode,
             INTEGER(dimc), INTEGER(nnum), INTEGER(nodes2),
             INTEGER(vnum), REAL(split2), INTEGER(csplit2),
             INTEGER(usesur), 
-            INTEGER(n1), REAL(wt1), REAL(dev1), REAL(yval1), REAL(yvals1), 
+            INTEGER(n1), REAL(wt1), REAL(dev1), REAL(yval1), 
             REAL(xdata2), REAL(wt2), REAL(treatment2), REAL(treatments2), REAL(y2),
             INTEGER(xmiss2), INTEGER(where));
     UNPROTECT(1);
