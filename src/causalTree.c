@@ -62,7 +62,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
 {
   
    
-    Rprintf("enter causaltree.c\n");
+    Rprintf("Enter causaltree.c\n");
     pNode tree;          /* top node of the tree */
     char *errmsg;
     int i, j, k, n;
@@ -116,6 +116,8 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     treatment = REAL(treatment2);
     treatments = REAL(treatments2);
            
+           Rprintf("end trs\n");
+                   
     minsize = asInteger(minsize2);
     propensity = asReal(p2);
     split_alpha = asReal(split_alpha2);
@@ -135,7 +137,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     
     R_FlushConsole();
   
-    //Rprintf("test print\n");
+    Rprintf("test print\n");
    // printf("test print2\n");
     //getchar1=getchar();
     /*
@@ -311,7 +313,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     tree->sum_tr = temp2;
     tree->parent = NULL;
 
-
+Rprintf("split rule in causal tree.c is %d.\n", split_Rule); 
     if (split_Rule == 1) {
         //tot:
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
