@@ -93,7 +93,8 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     double gamma;
     int NumHonest;
     double train_to_est_ratio = 0.;
-    
+           
+    Rprintf("end initial\n");
     /*
      * Return objects for R -- end in "3" to avoid overlap with internal names
      */
@@ -113,6 +114,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     xgrp = INTEGER(xgrp2);
     xvals = asInteger(xvals2);
     wt = REAL(wt2);
+           Rprintf("start trs\n");
     treatment = REAL(treatment2);
     treatments = REAL(treatments2);
            
@@ -144,7 +146,8 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
      * initialize the splitting functions from the function table
      */
     
-    if (split_Rule <= NUM_SPLIT_RULE && crossmeth <= NUM_CROSSMETH) {Rprintf("causalTree.c\n");
+    if (split_Rule <= NUM_SPLIT_RULE && crossmeth <= NUM_CROSSMETH) {
+               Rprintf("initialize split in causalTree.c\n");
 
 
         split_id = split_Rule - 1;
