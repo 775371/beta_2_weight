@@ -62,7 +62,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
 {
   
    
-    
+    Rprintf("enter causaltree.c\n");
     pNode tree;          /* top node of the tree */
     char *errmsg;
     int i, j, k, n;
