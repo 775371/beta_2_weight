@@ -401,6 +401,8 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 								wt = ctfit$dnode[, 3L],
 								dev = ctfit$dnode[, 1L],
 								yval = ctfit$dnode[, 4L],
+								yvals = ctfit$dnode[, 6L], 
+								
 								complexity = ctfit$dnode[, 2L],
 								ncompete = 0L,
 								nsurrogate = 0L)
@@ -413,6 +415,8 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 								wt = ctfit$dnode[, 3L],
 								dev = ctfit$dnode[, 1L],
 								yval = ctfit$dnode[, 4L],
+								yvals = ctfit$dnode[, 6L],
+					    
 								complexity = ctfit$dnode[, 2L],
 								ncompete = pmax(0L, ctfit$inode[, 3L] - 1L),
 								nsurrogate = ctfit$inode[, 4L])
