@@ -497,8 +497,10 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     SET_STRING_ELT(rname, 2, mkChar("dsplit"));
     SET_VECTOR_ELT(rlist, 3, isplit3);
     SET_STRING_ELT(rname, 3, mkChar("isplit"));
-    SET_VECTOR_ELT(rlist, 4, dnode3);
-    SET_STRING_ELT(rname, 4, mkChar("dnode")); #dnode add one estimator
+    /*SET_VECTOR_ELT(rlist, 4, dnode3);
+    SET_STRING_ELT(rname, 4, mkChar("dnode")); */
+    SET_VECTOR_ELT(rlist, 5, dnode3);
+    SET_STRING_ELT(rname, 5, mkChar("dnode")); #dnode add one estimator
     SET_VECTOR_ELT(rlist, 5, inode3);
     SET_STRING_ELT(rname, 5, mkChar("inode"));
     if (catcount > 0) {
