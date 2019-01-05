@@ -235,11 +235,11 @@ next:
             / ((wt1[origindx]* yy_sum[origindx]- y_sum[origindx]* y_sum[origindx])*(wt1[origindx]* kk_sum[origindx]- k_sum [origindx]* k_sum[origindx]));
 
 
-yvals1[origindx]= ((wt1[origindx] * kz_sum[origindx] *wt1[origindx]* kk_sum[origindx]- wt1[origindx] * kz_sum[origindx] * y_sum[origindx] * y_sum[origindx]- z_sum[origindx] * k_sum[origindx] *wt1[origindx] *yy_sum[origindx] + z_sum[origindx] * k_sum[origindx] * y_sum[origindx] * y_sum[origindx])
+/*yvals1[origindx]= ((wt1[origindx] * kz_sum[origindx] *wt1[origindx]* kk_sum[origindx]- wt1[origindx] * kz_sum[origindx] * y_sum[origindx] * y_sum[origindx]- z_sum[origindx] * k_sum[origindx] *wt1[origindx] *yy_sum[origindx] + z_sum[origindx] * k_sum[origindx] * y_sum[origindx] * y_sum[origindx])
               -(wt1[origindx] * yz_sum[origindx]  * wt1[origindx]* ky_sum[origindx]-wt1[origindx] * yz_sum[origindx] * y_sum[origindx] *k_sum[origindx] - z_sum[origindx] * y_sum[origindx] * wt1[origindx] * ky_sum[origindx] + z_sum[origindx] * y_sum[origindx] * y_sum[origindx] * k_sum[origindx])) 
             / ((wt1[origindx] * yy_sum[origindx] - y_sum[origindx] * y_sum[origindx])*(wt1[origindx] * kk_sum[origindx] - k_sum[origindx] * k_sum[origindx])); 
 
-
+*/
          
          dev1[origindx] = yy_sum[origindx] -  tt_mean * tt_mean;
          
@@ -250,7 +250,7 @@ yvals1[origindx]= ((wt1[origindx] * kz_sum[origindx] *wt1[origindx]* kk_sum[orig
             dev1[origindx] = yval1[parentdx];
          
          
-         yvals1[origindx] = yval1[parentdx];
+        /* yvals1[origindx] = yval1[parentdx];*/
         }
     }
     
@@ -262,7 +262,7 @@ SEXP
 honest_estimate_causalTree(SEXP dimx, SEXP nnode, 
                            SEXP nsplit, SEXP dimc, SEXP nnum, 
                            SEXP nodes2, 
-                           SEXP n1, SEXP wt1, SEXP dev1, SEXP yval1, SEXP yvals1, 
+                           SEXP n1, SEXP wt1, SEXP dev1, SEXP yval1, 
                            SEXP vnum, 
                            SEXP split2,
                            SEXP csplit2, SEXP usesur, 
