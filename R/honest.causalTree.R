@@ -21,7 +21,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 	temp[[1L]] <- quote(stats::model.frame) 
 	names(treatment) <- rownames(data)
 	m <- eval.parent(temp)
-	treatment <- treatment[(rownames(m))]
+#treatment <- treatment[(rownames(m))]
 
 
 	Terms <- attr(m, "terms")
@@ -66,7 +66,8 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 	temp2[[1L]] <- quote(stats::model.frame)
 	names(est_treatment) = rownames(est_data)
 	m2 <- eval.parent(temp2)
-	est_treatment <- est_treatment[(rownames(m2))]
+	#est_treatment <- est_treatment[(rownames(m2))]
+	
 	# honest data set used for later:
 	est_Y <- model.response(m2)
 	est_wts <- model.weights(m2)
@@ -134,8 +135,10 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 	split.Rule.int <- pmatch(split.Rule, c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD"))
 	if (is.na(split.Rule.int)) stop("Invalid splitting rule.")
 	split.Rule <- c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD")[split.Rule.int]
-   print(split.Rule.int)
-   print(split.Rule)
+   
+	print(split.Rule.int)
+        print(split.Rule)
+	
 	## check the Split.Honest, for convenience
 	if (split.Rule.int %in% c(1, 5)) {
 		if (!missing(split.Honest)) {
@@ -364,6 +367,8 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 					   X, # X features for model data
 					   wt, # for model data
 					   treatment, # for model data
+			                   treatments,
+			                   
 					   as.integer(init$numy),
 					   as.double(cost),
 					   as.double(xvar), # for model daa
@@ -478,7 +483,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 		if(ncol(ans$cptable) >= 4) {
 			ans$cptable[,4]  <- ans$cptable[,4] / ans$cptable[1, 4]
 		}
-		ans <- honest.est.causalTree(ans, est_X, est_wts, est_treatment, est_Y)
+		ans <- honest.est.causalTree(ans, est_X, est_wts, est_treatment, est_treatments, est_Y)
 		#estimate honest causaltree with train X and compare with est.causaltree after pruning
 		ans
 }
