@@ -111,7 +111,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 		Rprintf("trs in CTH_rundown.c %d.\n", trs);  
         }
 
-        if (trs == 0) {
+       /* if (trs == 0) {
 	    Rprintf("if trs in CTH_rundown.c %d.\n", trs);   
             tr_mean = tree->parent->xtreatMean[0];
             tr_var = 0;
@@ -132,7 +132,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             con_mean = consums / cons;
             tree->xcontrolMean[0] = con_mean;
             con_var = con_sqr_sum / cons - con_mean * con_mean;
-        }
+        }*/
         
         /*xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
                     con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);*/
