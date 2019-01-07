@@ -114,11 +114,12 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     xgrp = INTEGER(xgrp2);
     xvals = asInteger(xvals2);
     wt = REAL(wt2);
-           Rprintf("start trs\n");
+           Rprintf("start tr\n");
     treatment = REAL(treatment2);
+            Rprintf("end tr\n");
     treatments = REAL(treatments2);
-           
-           Rprintf("end trs\n");
+            Rprintf("end trs\n");
+          
                    
     minsize = asInteger(minsize2);
     propensity = asReal(p2);
