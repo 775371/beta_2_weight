@@ -14,7 +14,8 @@ honest_estimate_causalTree0(const int *dimx, int nnode, int nsplit, const int *d
                             const double *xdata2, 
                             const double *wt2, const double *treatment2, const double *treatments2, const double *y2,
                             const int *xmiss2, int *where)
-{Rprintf("honest_estimate_causalTree0\n");
+{
+     Rprintf("enter honest_estimate_causalTree.c\n");
     int i, j;
     int n;
     int ncat;
