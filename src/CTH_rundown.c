@@ -156,15 +156,15 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 	        
        beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / n;
 	        
-       double effect = beta_1*beta_1;
-       double effects = beta_2*beta_2;
+       double effect = beta_1;
+       double effects = beta_2;
 
        beta1_sqr_sum = beta_1 * beta_1;
        beta2_sqr_sum = beta_2 * beta_2;
-       var_beta = beta1_sqr_sum /n- beta_1 * beta_1 / (n* n) + beta2_sqr_sum /n- beta_2 * beta_2 / (n* n);
+       var_beta = beta1_sqr_sum /n- beta1_sqr_sum / (n* n) + beta2_sqr_sum /n- beta2_sqr_sum / (n* n);
        tmp=var_beta;
 
-    xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * (effect+effects)  + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) 
+    xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * (effect*effect+effects*effects)  + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) 
        * (1 - alpha) * tmp; 
 	    
 	    
