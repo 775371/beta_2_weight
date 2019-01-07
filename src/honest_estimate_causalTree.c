@@ -236,10 +236,10 @@ next:
 
          yval1[origindx]=beta_1
 
-/*yvals1[origindx]= ((wt1[origindx] * kz_sum[origindx] *wt1[origindx]* kk_sum[origindx]- wt1[origindx] * kz_sum[origindx] * y_sum[origindx] * y_sum[origindx]- z_sum[origindx] * k_sum[origindx] *wt1[origindx] *yy_sum[origindx] + z_sum[origindx] * k_sum[origindx] * y_sum[origindx] * y_sum[origindx])
+/* beta_2= ((wt1[origindx] * kz_sum[origindx] *wt1[origindx]* kk_sum[origindx]- wt1[origindx] * kz_sum[origindx] * y_sum[origindx] * y_sum[origindx]- z_sum[origindx] * k_sum[origindx] *wt1[origindx] *yy_sum[origindx] + z_sum[origindx] * k_sum[origindx] * y_sum[origindx] * y_sum[origindx])
               -(wt1[origindx] * yz_sum[origindx]  * wt1[origindx]* ky_sum[origindx]-wt1[origindx] * yz_sum[origindx] * y_sum[origindx] *k_sum[origindx] - z_sum[origindx] * y_sum[origindx] * wt1[origindx] * ky_sum[origindx] + z_sum[origindx] * y_sum[origindx] * y_sum[origindx] * k_sum[origindx])) 
             / ((wt1[origindx] * yy_sum[origindx] - y_sum[origindx] * y_sum[origindx])*(wt1[origindx] * kk_sum[origindx] - k_sum[origindx] * k_sum[origindx])); 
-
+   yvals2[origindx]=beta_2
 */
          
          dev1[origindx] = yy_sum[origindx] -  tt_mean * tt_mean;
