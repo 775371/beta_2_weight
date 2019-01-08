@@ -42,6 +42,9 @@
 EXTERN struct {
     double complexity;
     double alpha;
+    
+    double eta; /* weight */
+    
     double iscale;              /* used to check improvement==0, with error */
     double **ydata;
     double **xdata;
