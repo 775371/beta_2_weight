@@ -7,7 +7,9 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 					   na.action = na.causalTree, 
 					   split.Rule, split.Honest, HonestSampleSize, split.Bucket, bucketNum = 5,
 					   bucketMax = 100, cv.option, cv.Honest, minsize = 2L, 
-					   x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, cv.alpha = 0.5,cv.gamma=0.5,split.gamma=0.5,
+					   x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, cv.alpha = 0.5,
+		                           cv.eta=0.5, split.eta=0.5,
+		                           cv.gamma=0.5,split.gamma=0.5,
 					   cost,  ...){ print("causaltree start")
 
 	Call <- match.call()
@@ -26,7 +28,7 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 	
 	#treatment <- treatment[(rownames(m))]
 	#add
-        #treatments <- treatments[(rownames(m))]
+	#treatments <- treatments[(rownames(m))]
 	
 	
 	Terms <- attr(m, "terms")
@@ -138,6 +140,16 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 				stop("Invalid input for split.alpha. split.alpha should between 0 and 1.")
 			}
 		}
+		
+		if(missing(split.eta)) {
+			# set default honest splitting alpha to 0.5
+			split.eta <- 0.5
+		} else {
+			# check split.alpha in [0, 1]
+			if (split.eta > 1 || split.eta < 0) {
+				stop("Invalid input for split.eta. split.alpha should between 0 and 1.")
+			}
+		}
 	  #check for gamma for policy
 	  if(missing(split.gamma)) {
 	    # set default honest splitting alpha to 0.5
@@ -216,6 +228,10 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 		cv.alpha <- 0.5
 	}
 	
+        if (missing(cv.eta)) {
+		cv.eta <- 0.5
+	}
+						       
 	#for policy, set gamma (set for all presently)
 	if (missing(cv.gamma)) {
 	  cv.gamma <- 0.5
@@ -343,7 +359,10 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 					   as.double(split.alpha),
 					   as.double(cv.alpha),
 					   as.integer(HonestSampleSize),
-					   as.double(cv.gamma)
+					   as.double(cv.gamma),
+			       ##add weight
+			                   as.double(split.eta),
+					   as.double(cv.eta)
 					   )
                 print("END causalTree.R")
 		nsplit <- nrow(ctfit$isplit) # total number of splits, primary and surrogate
@@ -401,8 +420,6 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 								wt = ctfit$dnode[, 3L],
 								dev = ctfit$dnode[, 1L],
 								yval = ctfit$dnode[, 4L],
-								#yvals = ctfit$dnode[, 5L], 
-								
 								complexity = ctfit$dnode[, 2L],
 								ncompete = 0L,
 								nsurrogate = 0L)
@@ -415,8 +432,6 @@ causalTree <- function(formula, data, weights, treatment, treatments, subset,
 								wt = ctfit$dnode[, 3L],
 								dev = ctfit$dnode[, 1L],
 								yval = ctfit$dnode[, 4L],
-								#yvals = ctfit$dnode[, 5L],
-					    
 								complexity = ctfit$dnode[, 2L],
 								ncompete = pmax(0L, ctfit$inode[, 3L] - 1L),
 								nsurrogate = ctfit$inode[, 4L])
