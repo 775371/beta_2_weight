@@ -11,7 +11,7 @@
 #endif
 
 void
-CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha, 
+CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha, double eta, 
             double xtrain_to_est_ratio, double propensity)
 {   
 	Rprintf("Enter CTH_rundown.c");
@@ -138,7 +138,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         }*/
         
         xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], ct.treatments[obs2], tr_mean, 
-                    con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);
+                    con_mean, trs, cons, alpha, eta, xtrain_to_est_ratio, propensity);
        /*
        double  beta_1 , beta_0 , beta_2; 
        double var_beta , beta1_sqr_sum ; 
