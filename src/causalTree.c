@@ -383,7 +383,7 @@ Rprintf("split rule in causal tree.c is %d.\n", split_Rule);
      * Do the basic tree
      */
     
-    partition(1, tree, &temp, 0, n, minsize, split_Rule, split_alpha, bucketnum, bucketMax,
+    partition(1, tree, &temp, 0, n, minsize, split_Rule, split_alpha, split_eta,  bucketnum, bucketMax,
               train_to_est_ratio); // temp store sumrisk
   
     CpTable cptable = (CpTable) ALLOC(1, sizeof(cpTable));
@@ -402,7 +402,7 @@ Rprintf("split rule in causal tree.c is %d.\n", split_Rule);
         
         if (xvals > 1) {
             myxval(xvals, cptable, xgrp, maxcat, &errmsg, minsize, savesort, split_Rule,
-                   crossmeth, split_alpha, cv_alpha, bucketnum, bucketMax,gamma);
+                   crossmeth, split_alpha, cv_alpha, split_eta, cv_eta, bucketnum, bucketMax,gamma);
         }
     }
     /*
