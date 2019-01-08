@@ -162,10 +162,10 @@ extern double fitH_xpred(double *y, double wt, double treatment, double tr_mean,
                          double trs, double cons, double alpha, double xtrain_to_est_ratio);
 extern double fitA_xpred(double *y, double wt, double treatment, double tr_mean, double con_mean);
 extern double CTH_xpred(double *y, double wt, double treatment, double tr_mean, double con_mean,
-                        double trs, double cons, double alpha, double xtrain_to_est_ratio,
+                        double trs, double cons, double alpha, double eta, double xtrain_to_est_ratio,
                         double propensity);
 extern double CTA_xpred(double *y, double wt, double treatment, double tr_mean, double con_mean,
-                 double tree_tr_mean, double tree_con_mean, double alpha);
+                 double tree_tr_mean, double tree_con_mean, double alpha, double eta);
 extern double userH_xpred(double *y, double wt, double treatment, double tr_mean, double con_mean,
                         double trs, double cons, double alpha, double xtrain_to_est_ratio,
                         double propensity);
