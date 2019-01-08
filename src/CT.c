@@ -41,7 +41,7 @@ CTinit(int n, double *y[], int maxcat, char **error,
 void
 CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean, 
      double *risk, double *wt, double *treatment, double *treatments, double max_y,
-     double alpha, double train_to_est_ratio)
+     double alpha, double eta, double train_to_est_ratio)
 {   Rprintf("CTss in CT.c start\n");
     int i;
     double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
