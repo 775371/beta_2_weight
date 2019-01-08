@@ -31,6 +31,7 @@
  *      cost = nost
  *      xvar = vector of x features variance in column
  *      alpha = weight parameter for error function 
+ *      eta = weight parameter for multiple treatment
  *
  * Returned: a list with elements
  *      which = vector of final node numbers for each input obs
@@ -58,7 +59,8 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
            SEXP crossmeth2, SEXP crosshonest2, SEXP opt2,
            SEXP minsize2, SEXP p2, SEXP xvals2, SEXP xgrp2,
         SEXP ymat2, SEXP xmat2, SEXP wt2, SEXP treatment2, SEXP treatments2, SEXP ny2, SEXP cost2, 
-        SEXP xvar2, SEXP split_alpha2, SEXP cv_alpha2, SEXP NumHonest2, SEXP gamma2)
+        SEXP xvar2, SEXP split_alpha2, SEXP cv_alpha2, SEXP NumHonest2, SEXP gamma2,
+        SEXP split_eta2, SEXP cv_eta2,)
 {
   
    
@@ -90,6 +92,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     /* add propensity score: */
     double propensity;
     double split_alpha, cv_alpha;
+           double split_eta, cv_eta;
     double gamma;
     int NumHonest;
     double train_to_est_ratio = 0.;
@@ -125,6 +128,11 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     propensity = asReal(p2);
     split_alpha = asReal(split_alpha2);
     cv_alpha = asReal(cv_alpha2);
+           //weight
+    split_eta = asReal(split_eta2);
+    cv_eta = asReal(cv_eta2);
+           
+           
     gamma=asReal(gamma2);
     method = asInteger(method2); 
     crossmeth = asInteger(crossmeth2);
@@ -325,7 +333,7 @@ Rprintf("split rule in causal tree.c is %d.\n", split_Rule);
     } else if (split_Rule == 2) {  
         // ct:
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, treatments, ct.max_y, split_alpha, train_to_est_ratio);
+         &(tree->risk), wt, treatment, treatments, ct.max_y, split_alpha, split_eta, train_to_est_ratio);
     } else if (split_Rule == 3) {
         //fit
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
