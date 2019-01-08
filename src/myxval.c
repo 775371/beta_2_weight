@@ -7,7 +7,8 @@
 void
 myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg, 
        int minsize, int *savesort, int split_Rule,
-     int crossmeth, double split_alpha, double cv_alpha, int bucketnum, int bucketMax, double gamma)
+     int crossmeth, double split_alpha, double cv_alpha, int bucketnum, int bucketMax, double gamma, 
+       double split_eta, double cv_eta)
 {   Rprintf("myxval.c\n");
     int i, j, k, ii, jj;
     int last;
@@ -125,7 +126,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         } else if (split_Rule == 2) { Rprintf("call ct.c from myxval.c\n");
             // ct:
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp,  ct.trstemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+             &(xtree->risk), ct.wtemp, ct.trtemp,  ct.trstemp, ct.max_y, split_alpha, split_eta, xtrain_to_est_ratio);
         } else if (split_Rule == 3) {
             // fit
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
@@ -141,7 +142,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         } else if (split_Rule == 6) {
             // CTD
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.trstemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+             &(xtree->risk), ct.wtemp, ct.trtemp, ct.trstemp, ct.max_y, split_alpha, split_eta, xtrain_to_est_ratio);
         } else if (split_Rule == 7) {
             // fitD:
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
@@ -172,7 +173,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         xtree->complexity = xtree->risk;
 
 
-        partition(1, xtree, &temp, 0, k, minsize, split_Rule, split_alpha, bucketnum, bucketMax, 
+        partition(1, xtree, &temp, 0, k, minsize, split_Rule, split_alpha, split_eta, bucketnum, bucketMax, 
                   xtrain_to_est_ratio);
         
 
@@ -204,11 +205,11 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
                 
             } else if (crossmeth == 5) { Rprintf("crossmeth in myxevals.c is %d.\n",crossmeth);
                 //CT- honest
-                CTH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
+                CTH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, cv_eta, xtrain_to_est_ratio, ct.propensity);
                 
             } else if (crossmeth == 6) { Rprintf("crossmeth in myxevals.c is %d.\n",crossmeth);
                 //CT- dishonest
-                CTA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
+                CTA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, cv_eta);
             } else if (crossmeth == 7) {
                 // user - honest (set as CT - honest temporarily)
                 userH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
