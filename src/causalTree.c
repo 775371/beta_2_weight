@@ -60,7 +60,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
            SEXP minsize2, SEXP p2, SEXP xvals2, SEXP xgrp2,
         SEXP ymat2, SEXP xmat2, SEXP wt2, SEXP treatment2, SEXP treatments2, SEXP ny2, SEXP cost2, 
         SEXP xvar2, SEXP split_alpha2, SEXP cv_alpha2, SEXP NumHonest2, SEXP gamma2,
-        SEXP split_eta2, SEXP cv_eta2,)
+        SEXP split_eta2, SEXP cv_eta2)
 {
   
    
