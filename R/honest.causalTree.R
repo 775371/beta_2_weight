@@ -8,7 +8,8 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 							  HonestSampleSize, split.Bucket, bucketNum = 10,
 							  bucketMax = 40, cv.option, cv.Honest, minsize = 2L, model = FALSE,
 							  x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, 
-							  cv.alpha = 0.5,cv.gamma=0.5,split.gamma=0.5, cost, ...)  { 
+							  cv.alpha = 0.5, cv.eta=0.5, split.eta=0.5,
+			                                  cv.gamma=0.5, split.gamma=0.5, cost, ...)  { 
 
 	Call <- match.call()
 
@@ -247,6 +248,11 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 	if (missing(cv.alpha)) {
 		cv.alpha <- 0.5
 	}
+	
+	 if (missing(cv.eta)) {
+		cv.eta <- 0.5
+	}
+	
 	#for policy, set gamma (set for all presently)
 	if (missing(cv.gamma)) {
 	  cv.gamma <- 0.5
@@ -375,7 +381,10 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 					   as.double(split.alpha),
 					   as.double(cv.alpha),
 					   as.integer(HonestSampleSize),
-					   as.double(cv.gamma)
+					   as.double(cv.gamma),
+			       ##add weight
+			                   as.double(split.eta),
+					   as.double(cv.eta)
 					   )
 
 		nsplit <- nrow(ctfit$isplit) # total number of splits, primary and surrogate
