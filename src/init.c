@@ -29,7 +29,7 @@ SEXP honest_estimate_rparttree(SEXP dimx, SEXP nnode, SEXP nsplit, SEXP dimc,
 
 static const R_CallMethodDef CallEntries[] = {
     {"init_ctcallback", (DL_FUNC) &init_ctcallback, 5},
-    {"causalTree", (DL_FUNC) &causalTree, 24},
+    {"causalTree", (DL_FUNC) &causalTree, 26},
     {"pred_causalTree", (DL_FUNC) &pred_causalTree, 12},
     {"estimate_causalTree", (DL_FUNC) &estimate_causalTree, 12},
     {"honest_estimate_causalTree", (DL_FUNC) &honest_estimate_causalTree, 20},
