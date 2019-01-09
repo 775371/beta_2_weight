@@ -177,7 +177,7 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
     (me->leftson)->parent = me;
     (me->leftson)->complexity = tempcp - ct.alpha;
     left_split = partition(2 * nodenum, me->leftson, &left_risk, n1, n1 + nleft,
-                           min_node_size, split_Rule, alpha, bucketnum, bucketMax,
+                           min_node_size, split_Rule, alpha, eta, bucketnum, bucketMax,
                            train_to_est_ratio);
 
     /*
@@ -194,7 +194,7 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
     (me->rightson)->parent = me;
     (me->rightson)->complexity = tempcp - ct.alpha;
     right_split = partition(1 + 2 * nodenum, me->rightson, &right_risk,
-  		    n1 + nleft, n1 + nleft + nright, min_node_size, split_Rule, alpha,
+  		    n1 + nleft, n1 + nleft + nright, min_node_size, split_Rule, alpha, eta,
   		    bucketnum, bucketMax, train_to_est_ratio);
 
 
