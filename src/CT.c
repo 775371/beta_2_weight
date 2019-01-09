@@ -208,8 +208,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     temps=beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta(beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) )+ 
-            (1-eta)(beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt));
+    var_beta = eta*(beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt) )+ 
+            (1-eta)*(beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt));
     
     Rprintf("beta_1 in CTss in CT.c %d.\n", beta_1); 
     Rprintf("beta_2 in CTss in CT.c %d.\n", beta_2); 
