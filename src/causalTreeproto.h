@@ -7,7 +7,7 @@
 
 pNode branch(pNode tree, int obs);
 
-void bsplit(pNode me, int n1, int n2, int minsize, int split_Rule, double alpha,
+void bsplit(pNode me, int n1, int n2, int minsize, int split_Rule, double alpha, double eta,
             int bucketnum, int bucketMax, double train_to_est_ratio);
 
 void choose_surg(int n1, int n2, int *y, double *x, int *order,
