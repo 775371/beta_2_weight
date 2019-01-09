@@ -63,7 +63,7 @@ void fitH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp,
 void fitA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k);
 
 void CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
-                 double alpha, double xtrain_to_est_ratio, double propensity);
+                 double alpha, double eta, double xtrain_to_est_ratio, double propensity);
 void CTA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha);
 
 void userH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
