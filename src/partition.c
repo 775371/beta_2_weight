@@ -146,7 +146,7 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
      * Guess I have to do the split
      */
     
-    bsplit(me, n1, n2, min_node_size, split_Rule, alpha, bucketnum, bucketMax, train_to_est_ratio);
+    bsplit(me, n1, n2, min_node_size, split_Rule, alpha, eta, bucketnum, bucketMax, train_to_est_ratio);
     
     if (!me->primary) {
 	/*
