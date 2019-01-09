@@ -7,8 +7,9 @@
 void
 myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg, 
        int minsize, int *savesort, int split_Rule,
-     int crossmeth, double split_alpha, double cv_alpha, int bucketnum, int bucketMax, double gamma, 
-       double split_eta, double cv_eta)
+     int crossmeth, double split_alpha, double cv_alpha,double split_eta, double cv_eta,
+       int bucketnum, int bucketMax, double gamma, 
+       )
 {   Rprintf("myxval.c\n");
     int i, j, k, ii, jj;
     int last;
