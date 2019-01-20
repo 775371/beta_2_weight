@@ -505,7 +505,7 @@ treatments_effect[i] =  ((wts[i]* kz_[i] *wts[i]* yy_[i]-wts[i]* kz_[i] * y_[i] 
               -(wts[i]* yz_[i] *wts[i]* ky_[i] -wts[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *wts[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
             /( (wts[i]* yy_[i] - y_[i] * y_[i])*(wts[i]* kk_[i] - k_[i] * k_[i])-(wts[i]*ky_[i]-yy_[i]*kk_[i]) );
 
-
+Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect[i]);
                          
                          
                            
@@ -517,7 +517,7 @@ treatments_effect[i] =  ((wts[i]* kz_[i] *wts[i]* yy_[i]-wts[i]* kz_[i] * y_[i] 
         /*
          * Now find the split that we want
          */
-        
+        Rprintf("Now find the split that we want\n");
         left_wt = 0;
         left_tr = 0;
         left_n = 0;
