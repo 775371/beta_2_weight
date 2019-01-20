@@ -20,7 +20,7 @@ void free_tree(pNode node, int freenode);
 
 void graycode_init0(int maxcat);
 void graycode_init1(int numcat, int *count);
-void graycode_init2(int numcat, int *count, double *val);
+void graycode_init2(int numcat, int *count, double *val, double *vals);
 int graycode(void);
 
 pSplit insert_split(pSplit *listhead, int ncat, double improve, int max);
