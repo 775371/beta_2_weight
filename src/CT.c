@@ -498,12 +498,12 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
       /( (countn[i] * yy_[i] - y_[i] * y_[i]) * (countn[i]* kk_[i]- k_[i] * k_[i]) - (countn[i] * ky_[i] - yy_[i] * kk_[i])); 
 
 		    
-/*treatments_effect[i] =  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] * y_[i] * y_[i]- z_[i] * k_[i] *countn[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i])
+treatments_effect[i] =  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] * y_[i] * y_[i]- z_[i] * k_[i] *countn[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i])
               -(countn[i]* yz_[i] *countn[i]* ky_[i] -countn[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *countn[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
             /( (countn[i]* yy_[i] - y_[i] * y_[i])*(countn[i]* kk_[i] - k_[i] * k_[i])-(countn[i]*ky_[i]-yy_[i]*kk_[i]) );
 
-            */               
-           Rprintf("treatment_effect in CT.c %d.\n", treatment_effect);                
+                         
+           Rprintf("two treatment_effect in CT.c \n");                
                            
             } else
                 tsplit[i] = 0;
