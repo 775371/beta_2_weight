@@ -33,7 +33,7 @@ graycode_init1(int numcat, int *count)
 
 
 void
-graycode_init2(int numcat, int *count, double *val)
+graycode_init2(int numcat, int *count, double *val,double *vals )
 {Rprintf("graycode_init2\n");
     int i, j, k;
     double temp;
