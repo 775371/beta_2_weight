@@ -272,9 +272,9 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         for (i = 0; right_n > edge; i++) {
             
                 
-            Rprintf("The wt[i] in function CT in CT.c is %d\n",(int)wt[i]);
-            Rprintf("The treatment[i] in function CT in CT.c is %d\n",(int)treatment[i]);
-            Rprintf("The y[i] in function CT in CT.c is %d\n",(int)y[i]);
+         //   Rprintf("The wt[i] in function CT in CT.c is %d\n",(int)wt[i]);
+        //    Rprintf("The treatment[i] in function CT in CT.c is %d\n",(int)treatment[i]);
+         //   Rprintf("The y[i] in function CT in CT.c is %d\n",(int)y[i]);
                 
                 
                 
@@ -543,6 +543,42 @@ treatments_effect[i]=  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] 
             
             left_tr_sqr_sum += trsqrsums[j];
             right_tr_sqr_sum -= trsqrsums[j];
+	
+		
+		
+	    left_xz_sum += _xz[j];
+            right_xz_sum -= _xz[j];
+            left_xy_sum += _xy[j];
+            right_xy_sum -= _xy[j];
+            left_x_sum += _x[j];
+            right_x_sum -= _x[j];
+            left_y_sum += _y[j];
+            
+		
+            
+            left_y_sum += y_[i];
+            right_y_sum -= y_[i];
+            left_z_sum += z_[i];
+            right_z_sum -= z_[i];
+            left_yz_sum += yz_[i];
+            right_yz_sum -= yz_[i];
+           
+            left_yy_sum += yy_[i];
+            right_yy_sum -= yy_[i];
+            left_zz_sum += zz_[i];
+            right_zz_sum -= zz_[i];
+              /* add treatments */  
+             left_k_sum += k_[i];
+             right_k_sum -= k_[i];
+             left_ky_sum += ky_[i];
+             right_ky_sum -= ky_[i];
+           
+            left_kk_sum += kk_[i];
+            right_kk_sum -= kk_[i];
+            left_kz_sum += kz_[i];
+            right_kz_sum -= kz_[i]; 
+		
+		
             
             if (left_n >= edge && right_n >= edge &&
               
