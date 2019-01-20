@@ -324,7 +324,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                     
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta*(beta1_sqr_sum / left_wt - beta_1 * beta_1 / (left_wt * left_wt) )+ (1-eta)*(beta2_sqr_sum / left_wt - beta_2 * beta_2 / (left_wt * left_wt));
+    var_beta = eta*(beta1_sqr_sum / left_wt - beta_1 * beta_1 / (left_wt * left_wt) ) + (1-eta)*(beta2_sqr_sum / left_wt - beta_2 * beta_2 / (left_wt * left_wt));
 
      
     left_effect =  (eta*left_temp*left_temp+(1-eta)*left_temps*left_temps) * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
@@ -421,6 +421,50 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             trsums[j] += *y[i] * wt[i] * treatment[i];
             wtsqrsums[j] += (*y[i]) * (*y[i]) * wt[i];
             trsqrsums[j] +=  (*y[i]) * (*y[i]) * wt[i] * treatment[i];
+                
+               
+                
+            left_wt += wt[i];
+            right_wt -= wt[i];
+            left_tr += wt[i] * treatment[i];
+            right_tr -= wt[i] * treatment[i];
+            left_n++;
+            right_n--;
+            temp = *y[i] * wt[i] * treatment[i];
+            left_tr_sum += temp;
+            right_tr_sum -= temp;
+            left_sum += *y[i] * wt[i];
+            right_sum -= *y[i] * wt[i];
+            temp = (*y[i]) *  (*y[i]) * wt[i];
+            left_sqr_sum += temp;
+            right_sqr_sum -= temp;
+            temp = (*y[i]) * (*y[i]) * wt[i] * treatment[i];
+            left_tr_sqr_sum += temp;
+            right_tr_sqr_sum -= temp;
+                
+           
+            left_y_sum += treatment[i];
+            right_y_sum -= treatment[i];
+            left_z_sum += *y[i];
+            right_z_sum -= *y[i];
+            left_yz_sum += *y[i] * treatment[i];
+            right_yz_sum -= *y[i] * treatment[i];
+           
+            left_yy_sum += treatment[i] * treatment[i];
+            right_yy_sum -= treatment[i] * treatment[i];
+            left_zz_sum += *y[i] * *y[i];
+            right_zz_sum -= *y[i] * *y[i];
+              /* add treatments */  
+             left_k_sum += treatments[i];
+             right_k_sum -= treatments[i];
+             left_ky_sum += *y[i] * treatments[i];
+             right_ky_sum -= *y[i] * treatments[i];
+           
+            left_kk_sum += treatments[i] * treatments[i];
+            right_kk_sum -= treatments[i] * treatments[i];
+            left_kz_sum += treatments[i] * *y[i];
+            right_kz_sum -= treatments[i] * *y[i]; 
+                
         }
         
         for (i = 0; i < nclass; i++) {
