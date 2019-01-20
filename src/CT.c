@@ -627,11 +627,10 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
              
     temp = left_effect + right_effect - node_effect;
          
-Rprintf("temp in cat in CT.c %d.\n", temp); 
-Rprintf("best in cat in CT.c %d.\n", best); 
-continue;
-		    
-                if (temp >= best) {
+    Rprintf("temp in cat in CT.c %d.\n", temp); 
+    Rprintf("best in cat in CT.c %d.\n", best); 
+    continue;
+    if (temp > best) {
 		    Rprintf("cat: compare temp and best\n");
                     best = temp;
 				  
@@ -646,7 +645,7 @@ continue;
 	}
 
         *improve = best;
-	    Rprintf("improve  in cat is %d\n", *improve);
+	    Rprintf("improve cat is %d\n", *improve);
     }
         Rprintf("End function CT in CT.c \n");
 } /*CT FUNCTION*/
