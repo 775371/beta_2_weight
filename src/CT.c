@@ -391,7 +391,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 temp = left_effect + right_effect - node_effect;
                 //Rprintf("The temp in function CT in CT.c is %d\n",temp);
                     
-                if (temp > best) {
+                if (temp > best) {Rprintf("cont: compare temp and best\n");
                     best = temp;
                     where = i;               
                     if (left_temp < right_temp){
@@ -487,9 +487,7 @@ wts[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *wts[i]* ky_[i] + z_[i] * y_[i] * 
  /( (wts[i]* yy_[i] - y_[i] * y_[i]) * (wts[i]* kk_[i] - k_[i] * k_[i]) - ( wts[i] * ky_[i]-yy_[i] * kk_[i]) );
   
 Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect[i]);
-                         
-                     
-                           
+                 
             } else
                 tsplit[i] = 0;
         }
@@ -632,7 +630,8 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
 Rprintf("temp in CT.c %d.\n", temp);	    
 Rprintf("best before improve in CT.c %d.\n", best);          
 		    
-                if (temp > best) {Rprintf("compare temp and best\n");
+                if (temp > best) {
+		    Rprintf("cat: compare temp and best\n");
                     best = temp;
 				  
                     Rprintf("best after in CT.c is %d\n", best);
