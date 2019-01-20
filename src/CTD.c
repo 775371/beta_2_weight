@@ -32,14 +32,14 @@ static double *tr_end_bucket, *con_end_bucket;
 
 int
 CTDinit(int n, double *y[], int maxcat, char **error,
-		int *size, int who, double *wt, double *treatment, 
+		int *size, int who, double *wt, double *treatment, double *treatments,
 		int bucketnum, int bucketMax, double *train_to_est_ratio)
 {
 	if (who == 1 && maxcat > 0) {
 		graycode_init0(maxcat);
 		countn = (int *) ALLOC(2 * maxcat, sizeof(int));
 		tsplit = countn + maxcat;
-		treatment_effect = (double *) ALLOC(8 * maxcat, sizeof(double));
+		treatment_effect = (double *) ALLOC(9 * maxcat, sizeof(double));
 		wts = treatment_effect + maxcat;
 		trs = wts + maxcat;
 		sums = trs + maxcat;
@@ -47,7 +47,7 @@ CTDinit(int n, double *y[], int maxcat, char **error,
 		trsums = wtsums + maxcat;
 		wtsqrsums = trsums + maxcat;
 		wttrsqrsums = wtsqrsums + maxcat;
-		
+		treatments_effect = wttrsqrsums + maxcat;
 		
 		
 	y_ = (double *) ALLOC(9 * maxcat, sizeof(double));
@@ -70,9 +70,10 @@ CTDinit(int n, double *y[], int maxcat, char **error,
 
 
 void
-CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, double *risk, double *wt, double *treatment, double *treatments,
-		double max_y, double alpha, double train_to_est_ratio)
-{
+CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, double *risk, double *wt, 
+      double *treatment, double *treatments, double max_y, double alpha, double train_to_est_ratio)
+{   
+	Rprintf("CTDss in CTD.c start\n");
 	int i;
 	double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
 	double ttreat = 0.;
