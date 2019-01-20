@@ -28,7 +28,7 @@ CTinit(int n, double *y[], int maxcat, char **error,
         graycode_init0(maxcat);
         countn = (int *) ALLOC(2 * maxcat, sizeof(int));
         tsplit = countn + maxcat;
-        treatment_effect = (double *) ALLOC(8 * maxcat, sizeof(double));
+        treatment_effect = (double *) ALLOC(9 * maxcat, sizeof(double));
         wts = treatment_effect + maxcat;
         trs = wts + maxcat;
         sums = trs + maxcat;
@@ -36,6 +36,8 @@ CTinit(int n, double *y[], int maxcat, char **error,
         trsums = wtsums + maxcat;
         wtsqrsums = trsums + maxcat;
         trsqrsums = wtsqrsums + maxcat;
+	treatments_effect = trsqrsums + maxcat;
+	    
          y_ = (double *) ALLOC(9 * maxcat, sizeof(double));
         z_ = y_ + maxcat;
         yz_ = z_ + maxcat;
@@ -57,6 +59,7 @@ void
 CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean, 
      double *risk, double *wt, double *treatment, double *treatments, double max_y,
      double alpha, double eta, double train_to_est_ratio)
+	
 {   Rprintf("CTss in CT.c start\n");
     int i;
     double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
@@ -117,7 +120,7 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / twt;
         
     effect = beta_1;
-   effects=beta_2;
+    effects=beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = eta*(beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt)) + (1-eta)*(beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt));
@@ -140,7 +143,8 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
 void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, double *split, 
         int *csplit, double myrisk, double *wt, double *treatment, double *treatments,  int minsize, double alpha,double eta,
         double train_to_est_ratio)
-{   Rprintf("CT in CT.c start\n");
+{   
+	Rprintf("CT in CT.c start\n");
     int i, j;
     double temp;
     double temps;
@@ -171,25 +175,20 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     right_sqr_sum = 0.;
     right_tr_sqr_sum = 0.;
     right_n = n;
+	
     double   right_y_sum = 0., right_z_sum = 0.;
     double  left_y_sum = 0., left_z_sum = 0.;
     double right_yz_sum = 0.,  right_yy_sum = 0., right_zz_sum = 0.;
     double left_yz_sum = 0.,  left_yy_sum = 0., left_zz_sum = 0.;
-    double  beta_1 = 0., beta_0 = 0.;
-    
+    double  beta_1 = 0., beta_0 = 0.; 
     double   beta1_sqr_sum = 0.,  var_beta = 0.; /* beta*/
     double   beta2_sqr_sum = 0.; /* beta*/ 
     double left_k_sum =0. ; /* two beta*/
     double left_kz_sum = 0.,  left_ky_sum = 0., left_kk_sum = 0.;
     double right_k_sum =0. ; /* two beta*/
     double right_kz_sum = 0.,  right_ky_sum = 0., right_kk_sum = 0.;
-    
     double  beta_2=0.;     
         
- 
-
- 
-    
  
  
     for (i = 0; i < n; i++) {
@@ -436,9 +435,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             trsums[i] = 0;
             wtsqrsums[i] = 0;
             trsqrsums[i] = 0;
-                
-                
-                
+          
         y_[i] =  0;
         z_ [i]=  0;
         yz_[i] =  0;
@@ -448,9 +445,6 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         kz_[i] =  0;
         ky_ [i]=  0;
         kk_ [i]=  0;
-    
-   
-     
                 
         }
         
@@ -465,13 +459,10 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             trsums[j] += *y[i] * wt[i] * treatment[i];
             wtsqrsums[j] += (*y[i]) * (*y[i]) * wt[i];
             trsqrsums[j] +=  (*y[i]) * (*y[i]) * wt[i] * treatment[i];
-                
-               
-        
+
         y_[j] += treatment[i];
         z_[j] += *y[i];   
         yz_[j] += *y[i] * treatment[i];
-       
         yy_[j] += treatment[i] * treatment[i];
         zz_[j] += *y[i] * *y[i];
         k_[j]+= treatments[i];
@@ -479,8 +470,6 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         ky_[j]+= treatments[i] * treatment[i];
         kz_[j]+= *y[i] * treatments[i];
 
-           
-        Rprintf("rank the classes by treatment effect in CT.c\n");
                 
         }
         
@@ -500,6 +489,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
       /( (wts[i] * yy_[i] - y_[i] * y_[i]) * (wts[i]* kk_[i]- k_[i] * k_[i]) - (wts[i] * ky_[i] - yy_[i] * kk_[i])); 
 
 	Rprintf("treatment_effect[i] in function CT in CT.c is %d\n", treatment_effect[i]); 
+		    treatments_effect=0;
 /*		    
 treatments_effect[i] =  ((wts[i]* kz_[i] *wts[i]* yy_[i]-wts[i]* kz_[i] * y_[i] * y_[i]- 
 z_[i] * k_[i] *wts[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i]) -(wts[i]* yz_[i] *wts[i]* ky_[i] -
@@ -551,11 +541,7 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
             
             left_tr_sqr_sum += trsqrsums[j];
             right_tr_sqr_sum -= trsqrsums[j];
-	
-		
-	
-		
-            
+
             left_y_sum += y_[i];
             right_y_sum -= y_[i];
             left_z_sum += z_[i];
