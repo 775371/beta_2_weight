@@ -92,7 +92,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     /* add propensity score: */
     double propensity;
     double split_alpha, cv_alpha;
-           double split_eta, cv_eta;
+    double split_eta, cv_eta;
     double gamma;
     int NumHonest;
     double train_to_est_ratio = 0.;
@@ -307,7 +307,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     }
     
     train_to_est_ratio = 100;
-            Rprintf("start ct_init in causalTree.c \n");  
+     Rprintf("start ct_init in causalTree.c \n");  
     i = (*ct_init) (n, ct.ydata, maxcat, &errmsg, &ct.num_resp, 1, wt, treatment, 
          bucketnum, bucketMax, &train_to_est_ratio);
      Rprintf("end ct_init in causalTree.c \n");  
