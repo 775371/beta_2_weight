@@ -628,8 +628,7 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
              
     temp = left_effect + right_effect - node_effect;
          
-Rprintf("left_temp in CT.c %d.\n", left_temp);
-Rprintf("right_temp in CT.c %d.\n", right_temp);		    
+		    
 Rprintf("temp in CT.c %d.\n", temp);	    
 Rprintf("best before improve in CT.c %d.\n", best);          
 		    
@@ -643,10 +642,9 @@ Rprintf("best before improve in CT.c %d.\n", best);
                 }
             }
         }
-	    Rprintf("best in CT.c is %d\n", best);
+	 Rprintf("best after in CT.c is %d\n", best);
         *improve = best;
     }
-	
         Rprintf("End function CT in CT.c \n");
 }
 
