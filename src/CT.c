@@ -439,7 +439,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 
                 
                 
-    y_[i] =  0;
+        y_[i] =  0;
         z_ [i]=  0;
         yz_[i] =  0;
         yy_[i] =  0;
@@ -468,7 +468,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 
                
         
-         y_[j] += treatment[i];
+        y_[j] += treatment[i];
         z_[j] += *y[i];   
         yz_[j] += *y[i] * treatment[i];
        
@@ -480,7 +480,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         kz_[j]+= *y[i] * treatments[i];
 
            
-        
+        Rprintf("rank the classes by treatment effect in CT.c %d.\n");
                 
         }
         
@@ -498,7 +498,7 @@ treatments_effect[i]=  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] 
             / ((countn[i]* yy_[i] - y_[i] * y_[i])*(countn[i]* kk_[i] - k_[i] * k_[i])-(countn[i]*ky_[i]-yy_[i]*kk_[i]) );
 
                            
-                           
+           Rprintf("treatments_effect in CT.c %d.\n", treatments_effect);                
                            
             } else
                 tsplit[i] = 0;
