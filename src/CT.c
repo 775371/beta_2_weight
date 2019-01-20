@@ -632,9 +632,11 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
 Rprintf("temp in CT.c %d.\n", temp);	    
 Rprintf("best before improve in CT.c %d.\n", best);          
 		    
-                if (temp > best) {
+                if (temp > best) {Rprintf("compare temp and best\n");
                     best = temp;
-                    
+				  
+                    Rprintf("best after in CT.c is %d\n", best);
+				  
                     if (left_temp > right_temp)
                         for (i = 0; i < nclass; i++) csplit[i] = -tsplit[i];
                     else
@@ -642,7 +644,7 @@ Rprintf("best before improve in CT.c %d.\n", best);
                 }
             }
         }
-	 Rprintf("best after in CT.c is %d\n", best);
+	 
         *improve = best;
     }
         Rprintf("End function CT in CT.c \n");
