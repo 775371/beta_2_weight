@@ -494,15 +494,17 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
 				
             Rprintf("two treatment_effect start in CT.c \n");    
 				
-      treatment_effect[i] =  ((countn[i]* yz_[i]*countn[i]* kk_[i] - countn[i]* yz_[i] * k_[i] * k_[i] -
-      y_[i] * z_[i] *countn[i]* kk_[i] + y_[i] * z_[i] * k_[i] * k_[i])-(countn[i]* kz_[i] *countn[i]* ky_[i]-
-      countn[i]* kz_[i] * y_[i] * k_[i] - z_[i] * k_[i] *countn[i]* ky_[i] + z_[i] * k_[i] * k_[i] * y_[i])) 
-      /( (countn[i] * yy_[i] - y_[i] * y_[i]) * (countn[i]* kk_[i]- k_[i] * k_[i]) - (countn[i] * ky_[i] - yy_[i] * kk_[i])); 
+     treatment_effect[i] =  ((wts[i]* yz_[i]*wts[i]* kk_[i] - wts[i]* yz_[i] * k_[i] * k_[i] -
+      y_[i] * z_[i] *wts[i]* kk_[i] + y_[i] * z_[i] * k_[i] * k_[i])-(wts[i]* kz_[i] *wts[i]* ky_[i]-
+      wts[i]* kz_[i] * y_[i] * k_[i] - z_[i] * k_[i] *wts[i]* ky_[i] + z_[i] * k_[i] * k_[i] * y_[i])) 
+      /( (wts[i] * yy_[i] - y_[i] * y_[i]) * (wts[i]* kk_[i]- k_[i] * k_[i]) - (wts[i] * ky_[i] - yy_[i] * kk_[i])); 
 
+		Rprintf("treatment_effect[i] in function CT in CT.c is %d\n", treatment_effect[i]); 
 		    
-treatments_effect[i] =  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] * y_[i] * y_[i]- z_[i] * k_[i] *countn[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i])
-              -(countn[i]* yz_[i] *countn[i]* ky_[i] -countn[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *countn[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
-            /( (countn[i]* yy_[i] - y_[i] * y_[i])*(countn[i]* kk_[i] - k_[i] * k_[i])-(countn[i]*ky_[i]-yy_[i]*kk_[i]) );
+treatments_effect[i] =  ((wts[i]* kz_[i] *wts[i]* yy_[i]-wts[i]* kz_[i] * y_[i] * y_[i]- z_[i] * k_[i] *wts[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i])
+              -(wts[i]* yz_[i] *wts[i]* ky_[i] -wts[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *wts[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
+            /( (wts[i]* yy_[i] - y_[i] * y_[i])*(wts[i]* kk_[i] - k_[i] * k_[i])-(wts[i]*ky_[i]-yy_[i]*kk_[i]) );
+
 
                          
                          
