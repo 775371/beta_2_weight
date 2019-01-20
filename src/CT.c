@@ -387,7 +387,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 
                 temp = left_effect + right_effect - node_effect;
                 //Rprintf("The temp in function CT in CT.c is %d\n",temp);
-                    
+                     Rprintf("temp in cont in CT.c %d.\n", temp); 
+		    Rprintf("best in cont in CT.c %d.\n", best); 
                 if (temp > best) {Rprintf("cont: compare temp and best\n");
                     best = temp;
                     where = i;               
@@ -402,6 +403,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         }
         
         *improve = best;
+	    Rprintf("improve in cont in CT.c %d.\n", *improve); 
+	    
         if (best > 0) {         /* found something */
         csplit[0] = direction;
             *split = (x[where] + x[where + 1]) / 2; 
