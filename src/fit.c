@@ -6,7 +6,7 @@
 #include "causalTreeproto.h"
 
 
-static double *sums, *wtsums, *treatment_effect;
+static double *sums, *wtsums, *treatment_effect, *treatments_effect ;
 static double *wtsqrsums, *wttrsqrsums;
 static double *wts, *trs, *trsums;
 static int *countn;
@@ -24,7 +24,7 @@ fitinit(int n, double *y[], int maxcat, char **error,
         graycode_init0(maxcat);
         countn = (int *) ALLOC(2 * maxcat, sizeof(int));
         tsplit = countn + maxcat;
-        treatment_effect = (double *) ALLOC(8 * maxcat, sizeof(double));
+        treatment_effect = (double *) ALLOC(9 * maxcat, sizeof(double));
         wts = treatment_effect + maxcat;
         trs = wts + maxcat;
         sums = trs + maxcat;
@@ -32,6 +32,7 @@ fitinit(int n, double *y[], int maxcat, char **error,
         trsums = wtsums + maxcat;
         wtsqrsums = trsums + maxcat;
         wttrsqrsums = wtsqrsums + maxcat;
+	   treatments_effect = wttrsqrsums + maxcat;
     }
     *size = 1;
     *train_to_est_ratio = n * 1.0 / ct.NumHonest;
@@ -238,7 +239,7 @@ void fit(int n, double *y[], double *x, int nclass,
 			} else
 				tsplit[i] = 0;
 		}
-		graycode_init2(nclass, countn, treatment_effect);
+		graycode_init2(nclass, countn, treatment_effect, treatments_effect);
 		
 		/*
 		 * Now find the split that we want
