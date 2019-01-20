@@ -15,7 +15,7 @@
 #define max(a,b)  (((a) > (b)) ? (a) : (b))
 #endif
 
-static double *sums, *wtsums, *treatment_effect;
+static double *sums, *wtsums, *treatment_effect, *treatments_effect;
 static double *wtsqrsums, *wttrsqrsums;
 static double *wts, *trs, *trsums;
 static int *countn;
@@ -379,7 +379,7 @@ fitD(int n, double *y[], double *x, int nclass,
 	        } else
 	            tsplit[i] = 0;
 	    }
-	    graycode_init2(nclass, countn, treatment_effect);
+	    graycode_init2(nclass, countn, treatment_effect, treatments_effect);
 	    
 	    /*
 	    * Now find the split that we want
