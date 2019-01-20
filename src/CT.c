@@ -466,12 +466,11 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 tsplit[i] = RIGHT;
                 //treatment_effect[i] = trsums[j] / trs[j] - (wtsums[j] - trsums[j]) / (wts[j] - trs[j]);
                     
-                   treatment_effect[i]=  (
-	            (countn[i]* yz_sum[i]*countn[i]* kk_sum[i] - countn[i]* yz_sum[i] * k_sum[i] * k_sum[i] - y_sum[i] * z_sum[i] *countn[i]* kk_sum[i] + y_sum[i] * z_sum[i] * k_sum[i] * k_sum[i])
+treatment_effect[i]=  ((countn[i]* yz_sum[i]*countn[i]* kk_sum[i] - countn[i]* yz_sum[i] * k_sum[i] * k_sum[i] - y_sum[i] * z_sum[i] *countn[i]* kk_sum[i] + y_sum[i] * z_sum[i] * k_sum[i] * k_sum[i])
 	            -(countn[i]* kz_sum[i] *countn[i]* ky_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * k_sum[i] - z_sum[i] * k_sum[i] *countn[i]* ky_sum[i] + z_sum[i] * k_sum[i] * k_sum[i] * y_sum[i])) 
 	            / ( (countn[i] * yy_sum[i] - y_sum[i] * y_sum[i]) * (countn[i]* kk_sum[i]- k_sum[i] * k_sum[i]) - (countn[i] * ky_sum[i] - yy_sum[i] * kk_sum[i])); 
 
-                   treatments_effect[i]=  ((countn[i]* kz_sum[i] *countn[i]* yy_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * y_sum[i]- z_sum[i] * k_sum[i] *countn[i]*yy_sum[i] + z_sum[i] * k_sum[i] * y_sum[i] * y_sum[i])
+treatments_effect[i]=  ((countn[i]* kz_sum[i] *countn[i]* yy_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * y_sum[i]- z_sum[i] * k_sum[i] *countn[i]*yy_sum[i] + z_sum[i] * k_sum[i] * y_sum[i] * y_sum[i])
               -(countn[i]* yz_sum[i] *countn[i]* ky_sum[i] -countn[i]* yz_sum[i] * y_sum[i] *k_sum[i] - z_sum[i] * y_sum[i] *countn[i]* ky_sum[i] + z_sum[i] * y_sum[i] * y_sum[i] * k_sum[i])) 
             / ((countn[i]* yy_sum[i] - y_sum[i] * y_sum[i])*(countn[i]* kk_sum[i] - k_sum[i] * k_sum[i])-(countn[i]*ky_sum[i]-yy_sum[i]*kk_sum[i]) ); 
 
