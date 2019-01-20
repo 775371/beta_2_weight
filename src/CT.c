@@ -486,12 +486,14 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         
         for (i = 0; i < nclass; i++) {Rprintf("nclass in function CT in CT.c is %d\n", nclass);
 				      
-            if (countn[i] > 0) {Rprintf("countn in function CT in CT.c is %d\n", countn); 
+            if (countn[i] > 0) { 
 				
 				
                 tsplit[i] = RIGHT;
                //treatment_effect[i] = trsums[j] / trs[j] - (wtsums[j] - trsums[j]) / (wts[j] - trs[j]);
-                    
+				
+            Rprintf("two treatment_effect start in CT.c \n");    
+				
       treatment_effect[i] =  ((countn[i]* yz_[i]*countn[i]* kk_[i] - countn[i]* yz_[i] * k_[i] * k_[i] -
       y_[i] * z_[i] *countn[i]* kk_[i] + y_[i] * z_[i] * k_[i] * k_[i])-(countn[i]* kz_[i] *countn[i]* ky_[i]-
       countn[i]* kz_[i] * y_[i] * k_[i] - z_[i] * k_[i] *countn[i]* ky_[i] + z_[i] * k_[i] * k_[i] * y_[i])) 
@@ -503,7 +505,7 @@ treatments_effect[i] =  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i]
             /( (countn[i]* yy_[i] - y_[i] * y_[i])*(countn[i]* kk_[i] - k_[i] * k_[i])-(countn[i]*ky_[i]-yy_[i]*kk_[i]) );
 
                          
-           Rprintf("two treatment_effect in CT.c \n");                
+                         
                            
             } else
                 tsplit[i] = 0;
