@@ -10,6 +10,13 @@ static double *wts, *trs, *trsums;
 static int *countn;
 static int *tsplit;
 static double *wtsqrsums, *trsqrsums;
+ /*categorical var*/
+static double *y_, *z_ , *yz_ ,  *yy_ , *zz_ , *k_ , *kz_ ,  *ky_, *kk_ ;
+
+    
+
+
+
 
 int
 CTinit(int n, double *y[], int maxcat, char **error,
@@ -29,7 +36,15 @@ CTinit(int n, double *y[], int maxcat, char **error,
         trsums = wtsums + maxcat;
         wtsqrsums = trsums + maxcat;
         trsqrsums = wtsqrsums + maxcat;
-        
+         y_ = (double *) ALLOC(9 * maxcat, sizeof(double));
+        z_ = y_ + maxcat;
+        yz_ = z_ + maxcat;
+        yy_ = yz_ + maxcat;
+        zz_ = yy_ + maxcat;
+        k_ = zz_ + maxcat;
+        kz_ = k_ + maxcat;
+        ky_ = kz_ + maxcat;
+        kk_ = ky_ + maxcat;
     }
     *size = 1;
     *train_to_est_ratio = n * 1.0 / ct.NumHonest;
@@ -172,12 +187,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     double  beta_2=0.;     
         
  
- /*categorical var*/
-  double  y_sum = 0., z_sum = 0.;
-    double yz_sum = 0.,  yy_sum = 0., zz_sum = 0.;
-    
-    double k_sum =0. ; /* two beta*/
-    double kz_sum = 0.,  ky_sum = 0., kk_sum = 0.;
+
+ 
     
  
  
@@ -421,12 +432,15 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 
                 
                 
-           
-     y_sum[i] = 0.; z_sum[i] = 0.;
-  yz_sum[i] = 0.;  yy_sum[i] = 0.; zz_sum[i] = 0.;
-    
-     k_sum[i] =0. ; /* two beta*/
-     kz_sum[i] = 0.; ky_sum[i] = 0.; kk_sum[i] = 0.;
+    y_[i] =  0;
+        z_ [i]=  0;
+        yz_[i] =  0;
+        yy_[i] =  0;
+        zz_ [i]=  0;
+        k_ [i]=  0;
+        kz_[i] =  0;
+        ky_ [i]=  0;
+        kk_ [i]=  0;
     
    
      
@@ -446,16 +460,18 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             trsqrsums[j] +=  (*y[i]) * (*y[i]) * wt[i] * treatment[i];
                 
                
-          y_sum[j] += treatment[i];
-        z_sum[j] += *y[i];   
-        yz_sum[j] += *y[i] * treatment[i];
+        
+         y_[j] += treatment[i];
+        z_[j] += *y[i];   
+        yz_[j] += *y[i] * treatment[i];
        
-        yy_sum[j] += treatment[i] * treatment[i];
-        zz_sum[j] += *y[i] * *y[i];
-        k_sum[j]+= treatments[i];
-        kk_sum[j] += treatments[i] * treatments[i];
-        ky_sum[j]+= treatments[i] * treatment[i];
-        kz_sum[j]+= *y[i] * treatments[i];
+        yy_[j] += treatment[i] * treatment[i];
+        zz_[j] += *y[i] * *y[i];
+        k_[j]+= treatments[i];
+        kk_[j] += treatments[i] * treatments[i];
+        ky_[j]+= treatments[i] * treatment[i];
+        kz_[j]+= *y[i] * treatments[i];
+
            
         
                 
@@ -466,13 +482,13 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 tsplit[i] = RIGHT;
                 //treatment_effect[i] = trsums[j] / trs[j] - (wtsums[j] - trsums[j]) / (wts[j] - trs[j]);
                     
-treatment_effect[i]=  ((countn[i]* yz_sum[i]*countn[i]* kk_sum[i] - countn[i]* yz_sum[i] * k_sum[i] * k_sum[i] - y_sum[i] * z_sum[i] *countn[i]* kk_sum[i] + y_sum[i] * z_sum[i] * k_sum[i] * k_sum[i])
-	            -(countn[i]* kz_sum[i] *countn[i]* ky_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * k_sum[i] - z_sum[i] * k_sum[i] *countn[i]* ky_sum[i] + z_sum[i] * k_sum[i] * k_sum[i] * y_sum[i])) 
-	            / ( (countn[i] * yy_sum[i] - y_sum[i] * y_sum[i]) * (countn[i]* kk_sum[i]- k_sum[i] * k_sum[i]) - (countn[i] * ky_sum[i] - yy_sum[i] * kk_sum[i])); 
+      treatment_effect[i]=  ((countn[i]* yz_[i]*countn[i]* kk_[i] - countn[i]* yz_[i] * k_[i] * k_[i] - y_[i] * z_[i] *countn[i]* kk_[i] + y_[i] * z_[i] * k_[i] * k_[i])
+	            -(countn[i]* kz_[i] *countn[i]* ky_[i]-countn[i]* kz_[i] * y_[i] * k_[i] - z_[i] * k_[i] *countn[i]* ky_[i] + z_[i] * k_[i] * k_[i] * y_[i])) 
+	            / ( (countn[i] * yy_[i] - y_[i] * y_[i]) * (countn[i]* kk_[i]- k_[i] * k_[i]) - (countn[i] * ky_[i] - yy_[i] * kk_[i])); 
 
-treatments_effect[i]=  ((countn[i]* kz_sum[i] *countn[i]* yy_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * y_sum[i]- z_sum[i] * k_sum[i] *countn[i]*yy_sum[i] + z_sum[i] * k_sum[i] * y_sum[i] * y_sum[i])
-              -(countn[i]* yz_sum[i] *countn[i]* ky_sum[i] -countn[i]* yz_sum[i] * y_sum[i] *k_sum[i] - z_sum[i] * y_sum[i] *countn[i]* ky_sum[i] + z_sum[i] * y_sum[i] * y_sum[i] * k_sum[i])) 
-            / ((countn[i]* yy_sum[i] - y_sum[i] * y_sum[i])*(countn[i]* kk_sum[i] - k_sum[i] * k_sum[i])-(countn[i]*ky_sum[i]-yy_sum[i]*kk_sum[i]) ); 
+treatments_effect[i]=  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] * y_[i] * y_[i]- z_[i] * k_[i] *countn[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i])
+              -(countn[i]* yz_[i] *countn[i]* ky_[i] -countn[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *countn[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
+            / ((countn[i]* yy_[i] - y_[i] * y_[i])*(countn[i]* kk_[i] - k_[i] * k_[i])-(countn[i]*ky_[i]-yy_[i]*kk_[i]) );
 
                            
                            
