@@ -12,15 +12,11 @@
 #define max(a,b)  (((a) > (b)) ? (a) : (b))
 #endif
 
-static double *sums, *wtsums, *treatment_effect, *treatments_effect;
+static double *sums, *wtsums, *treatment_effect;
 static double *wts, *trs, *trsums;
 static int *countn;
 static int *tsplit;
 static double *wtsqrsums, *wttrsqrsums;
-
-/*categorical var*/
-static double *y_, *z_ , *yz_ ,  *yy_ , *zz_ , *k_ , *kz_ ,  *ky_, *kk_ ;
-
 
 // for discrete version:
 static int *n_bucket, *n_tr_bucket, *n_con_bucket;
@@ -32,14 +28,14 @@ static double *tr_end_bucket, *con_end_bucket;
 
 int
 CTDinit(int n, double *y[], int maxcat, char **error,
-		int *size, int who, double *wt, double *treatment, double *treatments,
+		int *size, int who, double *wt, double *treatment, 
 		int bucketnum, int bucketMax, double *train_to_est_ratio)
 {
 	if (who == 1 && maxcat > 0) {
 		graycode_init0(maxcat);
 		countn = (int *) ALLOC(2 * maxcat, sizeof(int));
 		tsplit = countn + maxcat;
-		treatment_effect = (double *) ALLOC(9 * maxcat, sizeof(double));
+		treatment_effect = (double *) ALLOC(8 * maxcat, sizeof(double));
 		wts = treatment_effect + maxcat;
 		trs = wts + maxcat;
 		sums = trs + maxcat;
@@ -47,19 +43,6 @@ CTDinit(int n, double *y[], int maxcat, char **error,
 		trsums = wtsums + maxcat;
 		wtsqrsums = trsums + maxcat;
 		wttrsqrsums = wtsqrsums + maxcat;
-		treatments_effect = wttrsqrsums + maxcat;
-		
-		
-	y_ = (double *) ALLOC(9 * maxcat, sizeof(double));
-        z_ = y_ + maxcat;
-        yz_ = z_ + maxcat;
-        yy_ = yz_ + maxcat;
-        zz_ = yy_ + maxcat;
-        k_ = zz_ + maxcat;
-        kz_ = k_ + maxcat;
-        ky_ = kz_ + maxcat;
-        kk_ = ky_ + maxcat;
-		
 	}
 	*size = 1;
 	*train_to_est_ratio = n * 1.0 / ct.NumHonest;
@@ -70,28 +53,15 @@ CTDinit(int n, double *y[], int maxcat, char **error,
 
 
 void
-CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, double *risk, double *wt, 
-      double *treatment, double *treatments, double max_y, double alpha, double train_to_est_ratio)
-{   
-	Rprintf("CTDss in CTD.c start\n");
+CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, double *risk, double *wt, double *treatment, double *treatments,
+		double max_y, double alpha, double train_to_est_ratio)
+{
 	int i;
 	double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
 	double ttreat = 0.;
 	double effect;
-	double effects;
-	
 	double tr_var, con_var;
 	double con_sqr_sum = 0., tr_sqr_sum = 0.;
-	double var_beta = 0., beta1_sqr_sum = 0.; /* var */
-        double  y_sum = 0., z_sum = 0.;
-        double yz_sum = 0.,  yy_sum = 0., zz_sum = 0.;
-    
-    double k_sum =0. ; /* two beta*/
-    double kz_sum = 0.,  ky_sum = 0., kk_sum = 0.;
-    
-    double  beta_1 = 0., beta_0 = 0., beta_2=0.;    
-    double beta2_sqr_sum = 0.; /* var */  
-	
 	for (i = 0; i < n; i++) {
 		temp1 += *y[i] * wt[i] * treatment[i];
 		temp0 += *y[i] * wt[i] * (1 - treatment[i]);
@@ -99,49 +69,17 @@ CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, doub
 		ttreat += wt[i] * treatment[i];
 		tr_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * treatment[i];
 		con_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * (1- treatment[i]);
-		
-	y_sum += treatment[i];
-        z_sum += *y[i];   
-        yz_sum += *y[i] * treatment[i];
-       
-        yy_sum += treatment[i] * treatment[i];
-        zz_sum += *y[i] * *y[i];
-        k_sum+= treatments[i];
-        kk_sum += treatments[i] * treatments[i];
-        ky_sum+= treatments[i] * treatment[i];
-        kz_sum+= *y[i] * treatments[i];
 	}
 
-	//effect = temp1 / ttreat - temp0 / (twt - ttreat);
+	effect = temp1 / ttreat - temp0 / (twt - ttreat);
 	tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
 	con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
-       
-	
-	/* Y= beta_0 + beta_1 T_1+beta_2 T_2 */
-    beta_1 = (
-            (twt* yz_sum *twt* kk_sum - twt* yz_sum * k_sum * k_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
-            -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum * k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
-            / ( (twt * yy_sum - y_sum * y_sum) * (twt* kk_sum - k_sum * k_sum) - (twt * ky_sum - yy_sum * kk_sum)); 
-        
-    beta_2 = ((twt* kz_sum *twt* yy_sum-twt* kz_sum * y_sum * y_sum- z_sum * k_sum *twt*yy_sum + z_sum * k_sum * y_sum * y_sum)
-              -(twt* yz_sum *twt* ky_sum -twt* yz_sum * y_sum *k_sum - z_sum * y_sum *twt* ky_sum + z_sum * y_sum * y_sum * k_sum)) 
-            / ((twt* yy_sum - y_sum * y_sum)*(twt* kk_sum - k_sum * k_sum)-(twt*ky_sum-yy_sum*kk_sum) ); 
-        
-    beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / twt;
-        
-    effect = beta_1;
-    effects=beta_2;
-    beta1_sqr_sum = beta_1 * beta_1;
-    beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta*(beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt)) + (1-eta)*(beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt));
-    
-    *tr_mean= temp1 / ttreat;
-    *con_mean= temp0 / (twt - ttreat);
-    *value = effect;
-	
-	/*
+
+	*tr_mean = temp1 / ttreat;
+	*con_mean = temp0 / (twt - ttreat);
+	*value = effect;
 	*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
-		(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat)); */
+		(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
 }
 
 void
@@ -405,17 +343,6 @@ CTD(int n, double *y[], double *x, int nclass,
 			trsums[i] = 0;
 			wtsqrsums[i] = 0;
 			wttrsqrsums[i] = 0;
-			
-	y_[i] =  0;
-        z_ [i]=  0;
-        yz_[i] =  0;
-        yy_[i] =  0;
-        zz_ [i]=  0;
-        k_ [i]=  0;
-        kz_[i] =  0;
-        ky_ [i]=  0;
-        kk_ [i]=  0;
-    
 		}
 
 
@@ -429,37 +356,16 @@ CTD(int n, double *y[], double *x, int nclass,
 			trsums[j] += *y[i] * wt[i] * treatment[i];
 			wtsqrsums[j] += (*y[i]) * (*y[i]) * wt[i];
 			wttrsqrsums[j] += (*y[i]) * (*y[i]) * wt[i] * treatment[i];
-			
-			
-			 y_[j] += treatment[i];
-        z_[j] += *y[i];   
-        yz_[j] += *y[i] * treatment[i];
-       
-        yy_[j] += treatment[i] * treatment[i];
-        zz_[j] += *y[i] * *y[i];
-        k_[j]+= treatments[i];
-        kk_[j] += treatments[i] * treatments[i];
-        ky_[j]+= treatments[i] * treatment[i];
-        kz_[j]+= *y[i] * treatments[i];
 		}
 
 		for (i = 0; i < nclass; i++) {
 			if (countn[i] > 0) {
 				tsplit[i] = RIGHT;
-
-				treatment_effect[i]=  ((countn[i]* yz_[i]*countn[i]* kk_[i] - countn[i]* yz_[i] * k_[i] * k_[i] - y_[i] * z_[i] *countn[i]* kk_[i] + y_[i] * z_[i] * k_[i] * k_[i])
-	            -(countn[i]* kz_[i] *countn[i]* ky_[i]-countn[i]* kz_[i] * y_[i] * k_[i] - z_[i] * k_[i] *countn[i]* ky_[i] + z_[i] * k_[i] * k_[i] * y_[i])) 
-	            / ( (countn[i] * yy_[i] - y_[i] * y_[i]) * (countn[i]* kk_[i]- k_[i] * k_[i]) - (countn[i] * ky_[i] - yy_[i] * kk_[i])); 
-
-
-				treatments_effect[i]=  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] * y_[i] * y_[i]- z_[i] * k_[i] *countn[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i])
-              -(countn[i]* yz_[i] *countn[i]* ky_[i] -countn[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *countn[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
-            / ((countn[i]* yy_[i] - y_[i] * y_[i])*(countn[i]* kk_[i] - k_[i] * k_[i])-(countn[i]*ky_[i]-yy_[i]*kk_[i]) );
-
+				treatment_effect[i] = trsums[j] / trs[j] - (wtsums[j] - trsums[j]) / (wts[j] - trs[j]);
 			} else
 				tsplit[i] = 0;
 		}
-		graycode_init2(nclass, countn, treatment_effect, treatments_effect);
+		graycode_init2(nclass, countn, treatment_effect);
 
 		/*
 		 * Now find the split that we want
