@@ -408,6 +408,19 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             trsums[i] = 0;
             wtsqrsums[i] = 0;
             trsqrsums[i] = 0;
+                
+                
+                
+            var_beta = 0., beta1_sqr_sum = 0.; /* var */
+     y_sum = 0., z_sum = 0.;
+  yz_sum = 0.,  yy_sum = 0., zz_sum = 0.;
+    
+     k_sum =0. ; /* two beta*/
+     kz_sum = 0.,  ky_sum = 0., kk_sum = 0.;
+    
+      beta_1 = 0., beta_0 = 0., beta_2=0.;    
+     beta2_sqr_sum = 0.; /* var */  
+                
         }
         
         /* rank the classes by treatment effect */
@@ -423,58 +436,42 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             trsqrsums[j] +=  (*y[i]) * (*y[i]) * wt[i] * treatment[i];
                 
                
-                
-            left_wt += wt[i];
-            right_wt -= wt[i];
-            left_tr += wt[i] * treatment[i];
-            right_tr -= wt[i] * treatment[i];
-            left_n++;
-            right_n--;
-            temp = *y[i] * wt[i] * treatment[i];
-            left_tr_sum += temp;
-            right_tr_sum -= temp;
-            left_sum += *y[i] * wt[i];
-            right_sum -= *y[i] * wt[i];
-            temp = (*y[i]) *  (*y[i]) * wt[i];
-            left_sqr_sum += temp;
-            right_sqr_sum -= temp;
-            temp = (*y[i]) * (*y[i]) * wt[i] * treatment[i];
-            left_tr_sqr_sum += temp;
-            right_tr_sqr_sum -= temp;
-                
+          y_sum[j] += treatment[i];
+        z_sum[j] += *y[i];   
+        yz_sum[j] += *y[i] * treatment[i];
+       
+        yy_sum[j] += treatment[i] * treatment[i];
+        zz_sum[j] += *y[i] * *y[i];
+        k_sum[j]+= treatments[i];
+        kk_sum[j] += treatments[i] * treatments[i];
+        ky_sum[j]+= treatments[i] * treatment[i];
+        kz_sum[j]+= *y[i] * treatments[i];
            
-            left_y_sum += treatment[i];
-            right_y_sum -= treatment[i];
-            left_z_sum += *y[i];
-            right_z_sum -= *y[i];
-            left_yz_sum += *y[i] * treatment[i];
-            right_yz_sum -= *y[i] * treatment[i];
-           
-            left_yy_sum += treatment[i] * treatment[i];
-            right_yy_sum -= treatment[i] * treatment[i];
-            left_zz_sum += *y[i] * *y[i];
-            right_zz_sum -= *y[i] * *y[i];
-              /* add treatments */  
-             left_k_sum += treatments[i];
-             right_k_sum -= treatments[i];
-             left_ky_sum += *y[i] * treatments[i];
-             right_ky_sum -= *y[i] * treatments[i];
-           
-            left_kk_sum += treatments[i] * treatments[i];
-            right_kk_sum -= treatments[i] * treatments[i];
-            left_kz_sum += treatments[i] * *y[i];
-            right_kz_sum -= treatments[i] * *y[i]; 
+        
                 
         }
         
         for (i = 0; i < nclass; i++) {
             if (countn[i] > 0) {
                 tsplit[i] = RIGHT;
-                treatment_effect[i] = trsums[j] / trs[j] - (wtsums[j] - trsums[j]) / (wts[j] - trs[j]);
+                //treatment_effect[i] = trsums[j] / trs[j] - (wtsums[j] - trsums[j]) / (wts[j] - trs[j]);
+                    
+                   treatment_effect[i]=  (
+	            (countn[i]* yz_sum[i]*countn[i]* kk_sum[i] - countn[i]* yz_sum[i] * k_sum[i] * k_sum[i] - y_sum[i] * z_sum[i] *countn[i]* kk_sum[i] + y_sum[i] * z_sum[i] * k_sum[i] * k_sum[i])
+	            -(countn[i]* kz_sum[i] *countn[i]* ky_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * k_sum[i] - z_sum[i] * k_sum[i] *countn[i]* ky_sum[i] + z_sum[i] * k_sum[i] * k_sum[i] * y_sum[i])) 
+	            / ( (countn[i] * yy_sum[i] - y_sum[i] * y_sum[i]) * (countn[i]* kk_sum[i]- k_sum[i] * k_sum[i]) - (countn[i] * ky_sum[i] - yy_sum[i] * kk_sum[i])); 
+
+                   treatments_effect[i]=  ((countn[i]* kz_sum[i] *countn[i]* yy_sum[i]-countn[i]* kz_sum[i] * y_sum[i] * y_sum[i]- z_sum[i] * k_sum[i] *countn[i]*yy_sum[i] + z_sum[i] * k_sum[i] * y_sum[i] * y_sum[i])
+              -(countn[i]* yz_sum[i] *countn[i]* ky_sum[i] -countn[i]* yz_sum[i] * y_sum[i] *k_sum[i] - z_sum[i] * y_sum[i] *countn[i]* ky_sum[i] + z_sum[i] * y_sum[i] * y_sum[i] * k_sum[i])) 
+            / ((countn[i]* yy_sum[i] - y_sum[i] * y_sum[i])*(countn[i]* kk_sum[i] - k_sum[i] * k_sum[i])-(countn[i]*ky_sum[i]-yy_sum[i]*kk_sum[i]) ); 
+
+                           
+                           
+                           
             } else
                 tsplit[i] = 0;
         }
-        graycode_init2(nclass, countn, treatment_effect);
+        graycode_init2(nclass, countn, treatment_effect, treatments_effect);
         
         /*
          * Now find the split that we want
