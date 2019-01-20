@@ -645,6 +645,7 @@ Rprintf("best before improve in CT.c %d.\n", best);
         }
 	 
         *improve = best;
+	    Rprintf("improve = best in CT.c is %d\n", *improve);
     }
         Rprintf("End function CT in CT.c \n");
 }
