@@ -545,15 +545,7 @@ treatments_effect[i]=  ((countn[i]* kz_[i] *countn[i]* yy_[i]-countn[i]* kz_[i] 
             right_tr_sqr_sum -= trsqrsums[j];
 	
 		
-		
-	    left_xz_sum += _xz[j];
-            right_xz_sum -= _xz[j];
-            left_xy_sum += _xy[j];
-            right_xy_sum -= _xy[j];
-            left_x_sum += _x[j];
-            right_x_sum -= _x[j];
-            left_y_sum += _y[j];
-            
+	
 		
             
             left_y_sum += y_[i];
