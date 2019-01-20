@@ -391,7 +391,8 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
 		    Rprintf("best in cont in CT.c %d.\n", best); 
                 if (temp > best) {Rprintf("cont: compare temp and best\n");
                     best = temp;
-                    where = i;               
+                    where = i;     
+				  Rprintf("best after in cont %d.\n", best);
                     if (left_temp < right_temp){
                         direction = LEFT;
                     }
@@ -626,13 +627,14 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
              
     temp = left_effect + right_effect - node_effect;
          
-Rprintf("temp in CT.c %d.\n", temp);	    
-Rprintf("best before improve in CT.c %d.\n", best);          	    
+Rprintf("temp in cat in CT.c %d.\n", temp); 
+Rprintf("best in cat in CT.c %d.\n", best); 
+		    
                 if (temp > best) {
 		    Rprintf("cat: compare temp and best\n");
                     best = temp;
 				  
-                    Rprintf("best after in CT.c is %d\n", best);
+                    Rprintf("best after in cat is %d\n", best);
 				  
                     if (left_temp > right_temp)
                         for (i = 0; i < nclass; i++) csplit[i] = -tsplit[i];
