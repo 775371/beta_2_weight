@@ -78,8 +78,20 @@ CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, doub
 	double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
 	double ttreat = 0.;
 	double effect;
+	double effects;
+	
 	double tr_var, con_var;
 	double con_sqr_sum = 0., tr_sqr_sum = 0.;
+	double var_beta = 0., beta1_sqr_sum = 0.; /* var */
+        double  y_sum = 0., z_sum = 0.;
+        double yz_sum = 0.,  yy_sum = 0., zz_sum = 0.;
+    
+    double k_sum =0. ; /* two beta*/
+    double kz_sum = 0.,  ky_sum = 0., kk_sum = 0.;
+    
+    double  beta_1 = 0., beta_0 = 0., beta_2=0.;    
+    double beta2_sqr_sum = 0.; /* var */  
+	
 	for (i = 0; i < n; i++) {
 		temp1 += *y[i] * wt[i] * treatment[i];
 		temp0 += *y[i] * wt[i] * (1 - treatment[i]);
@@ -87,17 +99,49 @@ CTDss(int n, double *y[], double *value, double *con_mean, double *tr_mean, doub
 		ttreat += wt[i] * treatment[i];
 		tr_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * treatment[i];
 		con_sqr_sum += (*y[i]) * (*y[i]) * wt[i] * (1- treatment[i]);
+		
+	y_sum += treatment[i];
+        z_sum += *y[i];   
+        yz_sum += *y[i] * treatment[i];
+       
+        yy_sum += treatment[i] * treatment[i];
+        zz_sum += *y[i] * *y[i];
+        k_sum+= treatments[i];
+        kk_sum += treatments[i] * treatments[i];
+        ky_sum+= treatments[i] * treatment[i];
+        kz_sum+= *y[i] * treatments[i];
 	}
 
-	effect = temp1 / ttreat - temp0 / (twt - ttreat);
+	//effect = temp1 / ttreat - temp0 / (twt - ttreat);
 	tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
 	con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
-
-	*tr_mean = temp1 / ttreat;
-	*con_mean = temp0 / (twt - ttreat);
-	*value = effect;
+       
+	
+	/* Y= beta_0 + beta_1 T_1+beta_2 T_2 */
+    beta_1 = (
+            (twt* yz_sum *twt* kk_sum - twt* yz_sum * k_sum * k_sum - y_sum * z_sum *twt* kk_sum + y_sum * z_sum * k_sum * k_sum)
+            -(twt* kz_sum *twt* ky_sum-twt* kz_sum * y_sum * k_sum - z_sum * k_sum *twt* ky_sum + z_sum * k_sum * k_sum * y_sum)) 
+            / ( (twt * yy_sum - y_sum * y_sum) * (twt* kk_sum - k_sum * k_sum) - (twt * ky_sum - yy_sum * kk_sum)); 
+        
+    beta_2 = ((twt* kz_sum *twt* yy_sum-twt* kz_sum * y_sum * y_sum- z_sum * k_sum *twt*yy_sum + z_sum * k_sum * y_sum * y_sum)
+              -(twt* yz_sum *twt* ky_sum -twt* yz_sum * y_sum *k_sum - z_sum * y_sum *twt* ky_sum + z_sum * y_sum * y_sum * k_sum)) 
+            / ((twt* yy_sum - y_sum * y_sum)*(twt* kk_sum - k_sum * k_sum)-(twt*ky_sum-yy_sum*kk_sum) ); 
+        
+    beta_0 = (z_sum - beta_1 * y_sum -beta_2 * k_sum) / twt;
+        
+    effect = beta_1;
+    effects=beta_2;
+    beta1_sqr_sum = beta_1 * beta_1;
+    beta2_sqr_sum = beta_2 * beta_2;
+    var_beta = eta*(beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt)) + (1-eta)*(beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt));
+    
+    *tr_mean= temp1 / ttreat;
+    *con_mean= temp0 / (twt - ttreat);
+    *value = effect;
+	
+	/*
 	*risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
-		(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
+		(1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat)); */
 }
 
 void
