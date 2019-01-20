@@ -4,11 +4,11 @@
 #include "causalTree.h"
 #include "causalTreeproto.h"
 
-static double *sums, *wtsums, *treatment_effect;
+static double *sums, *wtsums, *treatment_effect, *treatments_effect;
 static double *wts, *trs, *trsums;
 static int *countn;
 static int *tsplit;
-
+//static double *y_, *z_ , *yz_ ,  *yy_ , *zz_ , *k_ , *kz_ ,  *ky_, *kk_ ;
 
 int
 anovainit(int n, double *y[], int maxcat, char **error,
@@ -18,13 +18,22 @@ anovainit(int n, double *y[], int maxcat, char **error,
         graycode_init0(maxcat);
         countn = (int *) ALLOC(2 * maxcat, sizeof(int));
         tsplit = countn + maxcat;
-        treatment_effect = (double *) ALLOC(6 * maxcat, sizeof(double));
+        treatment_effect = (double *) ALLOC(7 * maxcat, sizeof(double));
         wts = treatment_effect + maxcat;
         trs = wts + maxcat;
         sums = trs + maxcat;
         wtsums = sums + maxcat;
         trsums = wtsums + maxcat;
-
+        treatments_effect = trsums + maxcat;
+/* y_ = (double *) ALLOC(9 * maxcat, sizeof(double));
+        z_ = y_ + maxcat;
+        yz_ = z_ + maxcat;
+        yy_ = yz_ + maxcat;
+        zz_ = yy_ + maxcat;
+        k_ = zz_ + maxcat;
+        kz_ = k_ + maxcat;
+        ky_ = kz_ + maxcat;
+        kk_ = ky_ + maxcat;*/
     }
     *size = 1;
     return 0;
@@ -175,7 +184,7 @@ anova(int n, double *y[], double *x, int nclass,
             } else
                 tsplit[i] = 0;
         }
-        graycode_init2(nclass, countn, treatment_effect);
+        graycode_init2(nclass, countn, treatment_effect,  treatments_effect);
         /*
          * Now find the split that we want
          */
