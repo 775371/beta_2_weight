@@ -171,6 +171,16 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     
     double  beta_2=0.;     
         
+ 
+ /*categorical var*/
+  double  y_sum = 0., z_sum = 0.;
+    double yz_sum = 0.,  yy_sum = 0., zz_sum = 0.;
+    
+    double k_sum =0. ; /* two beta*/
+    double kz_sum = 0.,  ky_sum = 0., kk_sum = 0.;
+    
+ 
+ 
     for (i = 0; i < n; i++) {
         right_wt += wt[i];
         right_tr += wt[i] * treatment[i];
