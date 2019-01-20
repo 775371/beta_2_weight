@@ -13,11 +13,6 @@ static double *wtsqrsums, *trsqrsums;
  /*categorical var*/
 static double *y_, *z_ , *yz_ ,  *yy_ , *zz_ , *k_ , *kz_ ,  *ky_, *kk_ ;
 
-    
-
-
-
-
 int
 CTinit(int n, double *y[], int maxcat, char **error,
         int *size, int who, double *wt, double *treatment, 
@@ -137,11 +132,8 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
  }
 
 
-
-
-
 void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, double *split, 
-        int *csplit, double myrisk, double *wt, double *treatment, double *treatments,  int minsize, double alpha,double eta,
+        int *csplit, double myrisk, double *wt, double *treatment, double *treatments,  int minsize, double alpha, double eta,
         double train_to_est_ratio)
 {   
 	Rprintf("CT in CT.c start\n");
@@ -188,9 +180,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     double right_k_sum =0. ; /* two beta*/
     double right_kz_sum = 0.,  right_ky_sum = 0., right_kk_sum = 0.;
     double  beta_2=0.;     
-        
- 
- 
+   
     for (i = 0; i < n; i++) {
         right_wt += wt[i];
         right_tr += wt[i] * treatment[i];
@@ -489,16 +479,16 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
       /( (wts[i] * yy_[i] - y_[i] * y_[i]) * (wts[i]* kk_[i]- k_[i] * k_[i]) - (wts[i] * ky_[i] - yy_[i] * kk_[i])); 
 
 	Rprintf("treatment_effect[i] in function CT in CT.c is %d\n", treatment_effect[i]); 
-		    treatments_effect=0;
+		    treatments_effect[i]=0;
 /*		    
 treatments_effect[i] =  ((wts[i]* kz_[i] *wts[i]* yy_[i]-wts[i]* kz_[i] * y_[i] * y_[i]- 
 z_[i] * k_[i] *wts[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i]) -(wts[i]* yz_[i] *wts[i]* ky_[i] -
 wts[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *wts[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
  /( (wts[i]* yy_[i] - y_[i] * y_[i]) * (wts[i]* kk_[i] - k_[i] * k_[i]) - ( wts[i] * ky_[i]-yy_[i] * kk_[i]) );
-
+ */   
 Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect[i]);
                          
-   */                      
+                     
                            
             } else
                 tsplit[i] = 0;
@@ -611,8 +601,6 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
     var_beta = eta*(beta1_sqr_sum / n - beta_1 * beta_1 / (n * n)) + (1-eta)*(beta2_sqr_sum / n - beta_2 * beta_2 / (n * n));
-    
-   
     left_effect = left_temp * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * left_wt * (var_beta);
                     
@@ -640,9 +628,9 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
              
     temp = left_effect + right_effect - node_effect;
          
-
+Rprintf("left_temp in CT.c %d.\n", left_temp);
+Rprintf("right_temp in CT.c %d.\n", right_temp);		    
 		    
-		    Rprintf("temp cat in CT.c %d.\n", temp);
                 
 		    
                 if (temp > best) {
@@ -657,6 +645,7 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
         }
         *improve = best;
     }
+	Rprintf("best in CT.c \n", best);
         Rprintf("End function CT in CT.c is %d\n");
 }
 
