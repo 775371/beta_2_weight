@@ -584,7 +584,7 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
               
                 (int) left_wt  >= min_node_size &&
                 
-                (int) right_wt  >= min_node_size) {  Rprintf("Now find the split that we want\n");
+                (int) right_wt  >= min_node_size) {  
                 
                 /*left_temp = left_tr_sum / left_tr - (left_sum - left_tr_sum) 
                     / (left_wt - left_tr);
@@ -654,7 +654,11 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
              
     temp = left_effect + right_effect - node_effect;
          
+
+		    
+		    Rprintf("temp cat in CT.c %d.\n", temp);
                 
+		    
                 if (temp > best) {
                     best = temp;
                     
