@@ -531,27 +531,28 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
             left_tr_sqr_sum += trsqrsums[j];
             right_tr_sqr_sum -= trsqrsums[j];
 
-            left_y_sum += y_[i];
-            right_y_sum -= y_[i];
-            left_z_sum += z_[i];
-            right_z_sum -= z_[i];
-            left_yz_sum += yz_[i];
-            right_yz_sum -= yz_[i];
+            left_y_sum += y_[j];
+            rjght_y_sum -= y_[j];
+            left_z_sum += z_[j];
+            rjght_z_sum -= z_[j];
+            left_yz_sum += yz_[j];
+            rjght_yz_sum -= yz_[j];
            
-            left_yy_sum += yy_[i];
-            right_yy_sum -= yy_[i];
-            left_zz_sum += zz_[i];
-            right_zz_sum -= zz_[i];
+            left_yy_sum += yy_[j];
+            rjght_yy_sum -= yy_[j];
+            left_zz_sum += zz_[j];
+            rjght_zz_sum -= zz_[j];
               /* add treatments */  
-             left_k_sum += k_[i];
-             right_k_sum -= k_[i];
-             left_ky_sum += ky_[i];
-             right_ky_sum -= ky_[i];
+             left_k_sum += k_[j];
+             rjght_k_sum -= k_[j];
+             left_ky_sum += ky_[j];
+             rjght_ky_sum -= ky_[j];
            
-            left_kk_sum += kk_[i];
-            right_kk_sum -= kk_[i];
-            left_kz_sum += kz_[i];
-            right_kz_sum -= kz_[i]; 
+            left_kk_sum += kk_[j];
+            rjght_kk_sum -= kk_[j];
+            left_kz_sum += kz_[j];
+            rjght_kz_sum -= kz_[j];
+
 		
 		
             
@@ -559,8 +560,8 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
               
                 (int) left_wt  >= min_node_size &&
                 
-                (int) right_wt  >= min_node_size) {  
-                
+                (int) right_wt  >= min_node_size) {
+	
                 /*left_temp = left_tr_sum / left_tr - (left_sum - left_tr_sum) 
                     / (left_wt - left_tr);
                 
@@ -629,9 +630,9 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
          
     Rprintf("temp in cat in CT.c %d.\n", temp); 
     Rprintf("best in cat in CT.c %d.\n", best); 
-    continue;
+    
     if (temp > best) {
-		    Rprintf("cat: compare temp and best\n");
+		    Rprintf("YES!cat: compare temp and best\n");
                     best = temp;
 				  
                     Rprintf("best after in cat is %d\n", best);
