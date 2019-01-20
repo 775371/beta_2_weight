@@ -260,13 +260,10 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
         
         for (i = 0; right_n > edge; i++) {
             
-                
          //   Rprintf("The wt[i] in function CT in CT.c is %d\n",(int)wt[i]);
         //    Rprintf("The treatment[i] in function CT in CT.c is %d\n",(int)treatment[i]);
          //   Rprintf("The y[i] in function CT in CT.c is %d\n",(int)y[i]);
-                
-                
-                
+       
             left_wt += wt[i];
             right_wt -= wt[i];
             left_tr += wt[i] * treatment[i];
@@ -378,7 +375,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     right_effect =  (eta*right_temp*right_temp+(1-eta)*right_temps*right_temps)  * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * right_wt * (var_beta);
                     
-//right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
+/* right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
                 /*right_tr_var = right_tr_sqr_sum / right_tr -
                     right_tr_sum * right_tr_sum / (right_tr * right_tr);
                 right_con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
@@ -629,6 +626,7 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
 		    
 Rprintf("temp in CT.c %d.\n", temp);	    
 Rprintf("best before improve in CT.c %d.\n", best);          
+continue;
 		    
                 if (temp > best) {
 		    Rprintf("cat: compare temp and best\n");
@@ -640,15 +638,15 @@ Rprintf("best before improve in CT.c %d.\n", best);
                         for (i = 0; i < nclass; i++) csplit[i] = -tsplit[i];
                     else
                         for (i = 0; i < nclass; i++) csplit[i] = tsplit[i];
-                }
-            }
-        }
-	 
+		}
+	    }
+	}
+
         *improve = best;
 	    Rprintf("improve = best in CT.c is %d\n", *improve);
     }
         Rprintf("End function CT in CT.c \n");
-}
+} /*CT FUNCTION*/
 
 
 double
