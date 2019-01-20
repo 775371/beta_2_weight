@@ -411,15 +411,15 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 
                 
                 
-            var_beta = 0., beta1_sqr_sum = 0.; /* var */
-     y_sum = 0., z_sum = 0.;
-  yz_sum = 0.,  yy_sum = 0., zz_sum = 0.;
+           
+     y_sum[i] = 0., z_sum[i] = 0.;
+  yz_sum[i] = 0.,  yy_sum[i] = 0., zz_sum[i] = 0.;
     
-     k_sum =0. ; /* two beta*/
-     kz_sum = 0.,  ky_sum = 0., kk_sum = 0.;
+     k_sum[i] =0. ; /* two beta*/
+     kz_sum[i] = 0.,  ky_sum[i] = 0., kk_sum[i] = 0.;
     
-      beta_1 = 0., beta_0 = 0., beta_2=0.;    
-     beta2_sqr_sum = 0.; /* var */  
+   
+     
                 
         }
         
