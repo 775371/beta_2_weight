@@ -500,7 +500,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
       /( (wts[i] * yy_[i] - y_[i] * y_[i]) * (wts[i]* kk_[i]- k_[i] * k_[i]) - (wts[i] * ky_[i] - yy_[i] * kk_[i])); 
 
 		Rprintf("treatment_effect[i] in function CT in CT.c is %d\n", treatment_effect[i]); 
-		    
+/*		    
 treatments_effect[i] =  ((wts[i]* kz_[i] *wts[i]* yy_[i]-wts[i]* kz_[i] * y_[i] * y_[i]- 
 z_[i] * k_[i] *wts[i]*yy_[i] + z_[i] * k_[i] * y_[i] * y_[i]) -(wts[i]* yz_[i] *wts[i]* ky_[i] -
 wts[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *wts[i]* ky_[i] + z_[i] * y_[i] * y_[i] * k_[i])) 
@@ -508,7 +508,7 @@ wts[i]* yz_[i] * y_[i] *k_[i] - z_[i] * y_[i] *wts[i]* ky_[i] + z_[i] * y_[i] * 
 
 Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect[i]);
                          
-                         
+   */                      
                            
             } else
                 tsplit[i] = 0;
