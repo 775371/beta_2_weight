@@ -251,7 +251,13 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
    
     node_effect = alpha * (eta*temp*temp+(1-eta)*temps*temps)  * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
         * right_wt * (var_beta);
-    
+ 
+ 
+ 
+    Rprintf("nclass in CT in CT.c %d.\n", nclass); 
+ 
+ 
+ 
     if (nclass == 0) {
         /* continuous predictor */
         left_wt = 0;
@@ -420,6 +426,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     * Categorical predictor
     */
     else {
+	    Rprintf("nclass in CT in CT.c %d.\n", nclass); 
         for (i = 0; i < nclass; i++) {
             countn[i] = 0;
             wts[i] = 0;
