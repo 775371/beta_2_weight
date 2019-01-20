@@ -365,7 +365,7 @@ CTD(int n, double *y[], double *x, int nclass,
 			} else
 				tsplit[i] = 0;
 		}
-		graycode_init2(nclass, countn, treatment_effect);
+		graycode_init2(nclass, countn, treatment_effect, treatments_effect);
 
 		/*
 		 * Now find the split that we want
