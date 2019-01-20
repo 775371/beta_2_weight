@@ -531,27 +531,28 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
             left_tr_sqr_sum += trsqrsums[j];
             right_tr_sqr_sum -= trsqrsums[j];
 
-            left_y_sum += y_[j];
-            rjght_y_sum -= y_[j];
+           left_y_sum += y_[j];
+            right_y_sum -= y_[j];
             left_z_sum += z_[j];
-            rjght_z_sum -= z_[j];
+            right_z_sum -= z_[j];
             left_yz_sum += yz_[j];
-            rjght_yz_sum -= yz_[j];
+            right_yz_sum -= yz_[j];
            
             left_yy_sum += yy_[j];
-            rjght_yy_sum -= yy_[j];
+            right_yy_sum -= yy_[j];
             left_zz_sum += zz_[j];
-            rjght_zz_sum -= zz_[j];
+            right_zz_sum -= zz_[j];
               /* add treatments */  
              left_k_sum += k_[j];
-             rjght_k_sum -= k_[j];
+             right_k_sum -= k_[j];
              left_ky_sum += ky_[j];
-             rjght_ky_sum -= ky_[j];
+             right_ky_sum -= ky_[j];
            
             left_kk_sum += kk_[j];
-            rjght_kk_sum -= kk_[j];
+            right_kk_sum -= kk_[j];
             left_kz_sum += kz_[j];
-            rjght_kz_sum -= kz_[j];
+            right_kz_sum -= kz_[j];
+
 
 		
 		
