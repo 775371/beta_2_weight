@@ -623,10 +623,9 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
              
     temp = left_effect + right_effect - node_effect;
          
-		    
-Rprintf("temp in CT.c %d.\n", temp);	    
-Rprintf("best before improve in CT.c %d.\n", best);          
-continue;
+//Rprintf("temp in CT.c %d.\n", temp);	    
+//Rprintf("best before improve in CT.c %d.\n", best);          
+
 		    
                 if (temp > best) {
 		    Rprintf("cat: compare temp and best\n");
