@@ -340,7 +340,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     var_beta = eta*(beta1_sqr_sum / left_wt - beta_1 * beta_1 / (left_wt * left_wt) ) + (1-eta)*(beta2_sqr_sum / left_wt - beta_2 * beta_2 / (left_wt * left_wt));
 
      
-    left_effect =  (eta*left_temp*left_temp+(1-eta)*left_temps*left_temps) * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    left_effect =  alpha *(eta*left_temp*left_temp+(1-eta)*left_temps*left_temps) * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * left_wt * (var_beta);
 
                    
@@ -370,9 +370,9 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                     
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta*(beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt)) + (1-eta)*(beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt));
+    var_beta = eta * (beta1_sqr_sum / right_wt - beta_1 * beta_1 / (right_wt * right_wt)) + (1-eta) * (beta2_sqr_sum / right_wt - beta_2 * beta_2 / (right_wt * right_wt));
 
-    right_effect =  (eta*right_temp*right_temp+(1-eta)*right_temps*right_temps)  * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    right_effect = alpha * (eta*right_temp*right_temp+(1-eta)*right_temps*right_temps)  * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * right_wt * (var_beta);
                     
 /* right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
@@ -597,12 +597,12 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
         
     beta_0 = (left_z_sum - beta_1 * left_y_sum - beta_2 * left_k_sum) / left_n;
 
-        
-    left_temp = eta*beta_1 * beta_1+ (1-eta)* beta_2 * beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta*(beta1_sqr_sum / n - beta_1 * beta_1 / (n * n)) + (1-eta)*(beta2_sqr_sum / n - beta_2 * beta_2 / (n * n));
-    left_effect = left_temp * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    left_temp = eta * beta1_sqr_sum+ (1-eta)* beta2_sqr_sum;
+    
+    var_beta = eta * (beta1_sqr_sum / n - beta_1 * beta_1 / (n * n)) + (1-eta)*(beta2_sqr_sum / n - beta_2 * beta_2 / (n * n));
+    left_effect = alpha * (eta * beta1_sqr_sum+ (1-eta)* beta2_sqr_sum) * left_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * left_wt * (var_beta);
                     
                     
@@ -616,14 +616,14 @@ Rprintf("treatments_effect[i] in function CT in CT.c is %d\n", treatments_effect
         
     beta_0 = (right_z_sum - beta_1 * right_y_sum - beta_2 * right_k_sum) / right_n;
 
-        
-    right_temp = eta*beta_1 * beta_1+ (1-eta)*beta_2 * beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
-    beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta*(beta1_sqr_sum / n - beta_1 * beta_1 / (n * n) )+ (1-eta)*(beta2_sqr_sum / n - beta_2 * beta_2 / (n * n));
+    beta2_sqr_sum = beta_2 * beta_2;    
+    right_temp = eta * beta_1 * beta_1 + (1-eta) * beta_2 * beta_2;
+    
+    var_beta = eta*(beta1_sqr_sum / n - beta_1 * beta_1 / (n * n) ) + (1-eta)*(beta2_sqr_sum / n - beta_2 * beta_2 / (n * n));
     
    
-    right_effect = right_temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    right_effect = alpha * (eta * beta_1 * beta_1 + (1-eta) * beta_2 * beta_2) * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
                     * right_wt * (var_beta);
                     
              
