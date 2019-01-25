@@ -172,6 +172,17 @@ honest.causalTree <- function(formula, data, weights, treatment, treatments, sub
 				stop("Invalid input for split.alpha. split.alpha should between 0 and 1.")
 			}
 		}
+		#check eta for weight
+		if(missing(split.eta)) {
+			# set default honest splitting alpha to 0.5
+			split.eta <- 1
+		} else {
+			# check split.alpha in [0, 1]
+			if (split.eta > 1 || split.eta < 0) {
+				stop("Invalid input for split.eta. split.eta should between 0 and 1.")
+			}
+		}
+		
 	  #check for gamma for policy
 	  if(missing(split.gamma)) {
 	    # set default honest splitting alpha to 0.5
