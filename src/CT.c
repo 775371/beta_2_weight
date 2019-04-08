@@ -118,8 +118,11 @@ CTss(int n, double *y[], double *value,  double *con_mean, double *tr_mean,
     effects=beta_2;
     beta1_sqr_sum = beta_1 * beta_1;
     beta2_sqr_sum = beta_2 * beta_2;
-    var_beta = eta*(beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt)) + (1-eta)*(beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt));
-    
+    for (i = 0; i < n; i++) {
+      z_hat_sum += (*y[i]-beta_0-beta_1*treatment[i])* (*y[i]-beta_0-beta_1*treatment[i]);
+    }
+    //var_beta = eta*(beta1_sqr_sum /twt- beta_1 * beta_1 / (twt* twt)) + (1-eta)*(beta2_sqr_sum /twt- beta_2 * beta_2 / (twt* twt));
+     var_beta = (z_hat_sum/(twt-2))/(yy_sum - y_sum * y_sum/twt) ;
     *tr_mean= temp1 / ttreat;
     *con_mean= temp0 / (twt - ttreat);
     *value = effect;
